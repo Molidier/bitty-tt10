@@ -1,2 +1,5 @@
-pytest==8.2.2
+encodings
 cocotb==1.9.1
+pytest==8.2.2
+iverilog
+verilator
