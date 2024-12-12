@@ -7,12 +7,12 @@
 
 module tt_um_bitty (
     input  wire [7:0] ui_in,    // Dedicated inputs
+    /* verilator lint_off UNDRIVEN */
     output wire [7:0] uo_out,   // Dedicated outputs
     input  wire [7:0] uio_in,   // IOs: Input path
     /* verilator lint_off UNDRIVEN */
     output wire [7:0] uio_out,  // IOs: Output path
     /* verilator lint_off UNDRIVEN */
-    
     output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock

@@ -42,7 +42,7 @@ module uart_rx
 
 
     // FSM: Data and control logic
-    always @(negedge clk) begin
+    always @(posedge clk) begin
         // Default values
         done <= 1'b0;
         clk_counter <= clk_counter;

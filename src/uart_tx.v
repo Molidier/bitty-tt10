@@ -40,17 +40,17 @@ module uart_tx
     end
 
     // FSM: Data and control logic
-    always @(negedge clk) begin
+    always @(posedge clk) begin
         // Default values
-        data_reg <= 1'b1;
-        clk_counter <= clk_counter;
-        bit_counter <= bit_counter;
+        data_reg<=1'b1;
+        clk_counter<=clk_counter;
+        bit_counter<=bit_counter;
 
         case (PS)
             IDLE: begin
-                data_reg <= 1'b1;
-                bit_counter <= 0;
-                clk_counter <= 0;
+                data_reg <=1'b1;
+                bit_counter <=0;
+                clk_counter <=0;
                 
                 if (!run) begin
                     //$display("tx_idle");
@@ -58,39 +58,39 @@ module uart_tx
             end
 
             START_BIT: begin
-                data_reg <= 1'b0;
+                data_reg <=1'b0;
                 
                 if (clk_counter < CLKS_PER_BIT - 1) begin
-                    clk_counter <= clk_counter + 1'b1;
+                    clk_counter <=clk_counter + 1'b1;
                 end
                 else begin
-                    clk_counter <= 0;
+                    clk_counter <=0;
                 end
             end
 
             DATA_BITS: begin
-                data_reg <= data_bus[bit_counter];
+                data_reg <=data_bus[bit_counter];
                 
                 if (clk_counter < CLKS_PER_BIT - 1) begin
-                    clk_counter <= clk_counter + 1'b1;
+                    clk_counter <=clk_counter + 1'b1;
                 end
                 else begin
-                    clk_counter <= 0;
+                    clk_counter <=0;
                     
                     if (bit_counter < 7) begin
-                        bit_counter <= bit_counter + 1'b1;
+                        bit_counter <=bit_counter + 1'b1;
                     end
                 end
             end
 
             STOP_BIT: begin
-                data_reg <= 1'b1;
+                data_reg <=1'b1;
                 
                 if (clk_counter < CLKS_PER_BIT - 1) begin
-                    clk_counter <= clk_counter + 1'b1;
+                    clk_counter <=clk_counter + 1'b1;
                 end
                 else begin
-                    clk_counter <= 0;
+                    clk_counter <=0;
                 end
             end
 
@@ -99,9 +99,9 @@ module uart_tx
             end
 
             default: begin
-                data_reg <= 1'b1;
-                clk_counter <= 0;
-                bit_counter <= 0;
+                data_reg <=1'b1;
+                clk_counter <=0;
+                bit_counter <=0;
             end
         endcase
     end
@@ -110,37 +110,37 @@ module uart_tx
     // Next state transition logic
     always @(negedge clk) begin
         // Default next state
-        NS <= PS;
+        NS <=PS;
 
         case (PS)
             IDLE: begin
-                NS <= (!run) ? START_BIT : IDLE;
+                NS <=(!run) ? START_BIT : IDLE;
             end
 
             START_BIT: begin
-                NS <= (clk_counter <= CLKS_PER_BIT - 1) ? DATA_BITS : START_BIT;
+                NS <=(clk_counter == CLKS_PER_BIT - 1) ? DATA_BITS : START_BIT;
             end
 
             DATA_BITS: begin
-                if (clk_counter <= CLKS_PER_BIT - 1) begin
+                if (clk_counter == CLKS_PER_BIT - 1) begin
                     if (bit_counter < 7) begin
-                        NS <= DATA_BITS;
+                        NS <=DATA_BITS;
                     end else begin
-                        NS <= STOP_BIT;
+                        NS <=STOP_BIT;
                     end
                 end
             end
 
             STOP_BIT: begin
-                NS <= (clk_counter <= CLKS_PER_BIT - 1) ? DONE : STOP_BIT;
+                NS<=(clk_counter == CLKS_PER_BIT - 1) ? DONE : STOP_BIT;
             end
 
             DONE: begin
-                NS <= IDLE;
+                NS<=IDLE;
             end
 
             default: begin
-                NS <= IDLE;
+                NS<=IDLE;
             end
         endcase
     end
