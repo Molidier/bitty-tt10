@@ -35,7 +35,7 @@ jobs:
         run: |
           cd test
           make clean
-          make verilator  # Make sure to use the appropriate target if necessary
+          make
 
       - name: Test Summary
         uses: test-summary/action@v2.3
