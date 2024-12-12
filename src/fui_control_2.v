@@ -8,7 +8,6 @@ module fui_control_2(
 	
 );
 
-    wire [15:0] instr;
     wire [7:0] new_pc;  // Declare new_pc as a wire
 	wire [7:0] addr;
 
@@ -28,7 +27,6 @@ module fui_control_2(
     wire [7:0] from_bitty_to_uart;
     wire tx_en, tx_en_fiu, tx_en_bitty;
    
-    reg en_fetch;
 	wire fetch_done;
     wire [7:0] tx_data;
     
@@ -46,8 +44,6 @@ module fui_control_2(
     parameter S9 = 4'b1001;
     parameter S10 = 4'b1010;
     parameter S11 = 4'b1011;
-    parameter S12 = 4'b1100;
-    parameter S13 = 4'b1101;
 
     //Use in FSM
     reg stop_for_rw;
@@ -56,7 +52,6 @@ module fui_control_2(
     fetch_instruction fi_inst(
         .clk(clk),
         .reset(reset),
-        .en_fetch(en_fetch),
         .address(addr),  
 
         .stop_for_rw(stop_for_rw),
@@ -142,7 +137,6 @@ module fui_control_2(
     end
 
    always @(*) begin
-	     en_fetch = 1'b0;
          run_bitty = 1'b0;
          en_pc = 1'b0;
          uart_sel = 1'b0;
@@ -150,9 +144,6 @@ module fui_control_2(
         case (cur_state)
             S0: begin
                 stop_for_rw = 1'b0;
-            end
-            S1: begin
-                en_fetch = 1'b1;
             end
             S3: begin
                 en_pc = 1'b1;

@@ -1,7 +1,6 @@
 module fetch_instruction(
     input wire clk,
     input wire reset,
-    input en_fetch,
     //input next_instr_en,
     input wire [7:0] address,  // 8-bit address to be sent
     input wire rx_do,          // Signal indicating data received
@@ -30,7 +29,6 @@ module fetch_instruction(
     parameter IDLE = 3'b000;
     parameter SEND_FLAG = 3'b001;
     parameter SEND_ADDR = 3'b010;
-    parameter WAIT_RX = 3'b011;
     parameter RECEIVE_INST_LOW = 3'b100;
     parameter RECEIVE_INST_HIGH = 3'b101;
     parameter DONE = 3'b110;
@@ -42,7 +40,6 @@ module fetch_instruction(
         //ff_a <= instruction;
 		if (!reset | stop_for_rw==1) begin
 			state <= IDLE;
-            tx_start = 1;
 		end
 		else begin
 			state <= next_state;

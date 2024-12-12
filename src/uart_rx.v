@@ -107,41 +107,41 @@ module uart_rx
         // Next state transition logic
     always @(negedge clk) begin
         // Default next state
-        NS = PS;
+        NS <= PS;
 
         case (PS)
             IDLE: begin
-                NS = (data_bit == 1'b0) ? START_BIT : IDLE;
+                NS <= (data_bit == 1'b0) ? START_BIT : IDLE;
             end
 
             START_BIT: begin
                 if (clk_counter == CLKS_PER_BIT / 2) begin
-                    NS = (data_bit == 1'b0) ? DATA_BITS : ERROR_ST;
+                    NS <= (data_bit == 1'b0) ? DATA_BITS : ERROR_ST;
                 end
             end
 
             DATA_BITS: begin
                 if (clk_counter == CLKS_PER_BIT - 1) begin
-                    NS = (bit_counter < 7) ? DATA_BITS : STOP_BIT;
+                    NS <= (bit_counter < 7) ? DATA_BITS : STOP_BIT;
                 end
             end
 
             STOP_BIT: begin
                 if (clk_counter == CLKS_PER_BIT - 1) begin
-                    NS = DONE;
+                    NS <= DONE;
                 end
             end
 
             DONE: begin
-                NS = IDLE;
+                NS <= IDLE;
             end
 
             ERROR_ST: begin
-                NS = ERROR_ST;
+                NS <= ERROR_ST;
             end
 
             default: begin
-                NS = IDLE;
+                NS <= IDLE;
             end
         endcase
     end

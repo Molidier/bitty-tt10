@@ -28,7 +28,6 @@ module lsu(
     assign tx_data_out = tx_data;
 
     // State encoding
-    parameter IDLE = 3'b000;
     parameter SEND_FLAG = 3'b001;
     parameter SEND_ADDR = 3'b010;
     //parameter WAIT_RX = 3'b011;
@@ -43,7 +42,6 @@ module lsu(
 
     
     reg [2:0] state, next_state;
-    reg [15:0] ff_a, ff_b;
 
     wire [1:0] en;
     assign en = en_ls;
