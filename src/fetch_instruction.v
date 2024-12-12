@@ -53,7 +53,7 @@ module fetch_instruction(
         tx_start = 1;  // No transmission by default
         tx_data = 8'b00000000;
         done = 0;
-
+        instruction = instruction;
         case (state)
             IDLE: begin
 			   done = 0;
@@ -90,7 +90,10 @@ module fetch_instruction(
             end
 
             default: begin
-				done = 0;
+				tx_start = 1;  // No transmission by default
+                tx_data = 8'b00000000;
+                done = 0;
+                instruction = instruction;
             end
         endcase
     end

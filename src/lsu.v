@@ -79,7 +79,6 @@ module lsu(
                 else if(en==2'b10) begin
                     tx_data = 8'b00000010;  // Send flag byte
                     tx_start = 0;  // Start transmission
-
                 end
 
             end
@@ -122,13 +121,18 @@ module lsu(
             end
 
             default: begin
-				done = 0;
+                tx_start = 1;  // No transmission by default
+                tx_data = 8'b00000000;
+                done = 0;
+                instruction = instruction;
+
             end
         endcase
     end
 
     /* verilator lint_off LATCH */
     always @(*) begin
+        next_state = next_state;
         case (state)
             SEND_FLAG: next_state = (tx_done==1'b1 & en_ls!=2'b0) ? SEND_ADDR:SEND_FLAG;
             SEND_ADDR: begin

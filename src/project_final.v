@@ -21,10 +21,10 @@ module tt_um_bitty (
 
     //I/O ports assignment
 
-    reg reset;
-    reg rx_data_bit;
+    wire reset;
+    wire rx_data_bit;
     wire tx_data_bit;
-    reg [12:0] clks_per_bit;
+    wire [12:0] clks_per_bit;
 
     assign reset = rst_n;
     assign rx_data_bit = uio_in[0];
@@ -33,8 +33,8 @@ module tt_um_bitty (
     assign clks_per_bit[12:8] = uio_in[7:3];
     assign clks_per_bit[7:0] = ui_in[7:0];
 
-    /* verilator lint_off UNUSEDSIGNAL */
-    wire _unused = &{ena, uio_in[2:1], uio_out, uo_out[7:1], 1'b0};
+    /* verilator lint_off UNUSED */
+    wire _unused = &{ena, uio_in[2:1], uio_out, uo_out[7:1], 1'b0, uio_oe};
 
     assign uo_out[0] = tx_data_bit; //output
 
