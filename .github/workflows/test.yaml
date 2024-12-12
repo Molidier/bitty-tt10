@@ -12,6 +12,10 @@ jobs:
       - name: Install iverilog
         shell: bash
         run: sudo apt-get update && sudo apt-get install -y iverilog
+        
+      - name: Install Verilator
+        shell: bash
+        run: sudo apt-get install verilator
 
       # Set Python up and install cocotb
       - name: Setup python
