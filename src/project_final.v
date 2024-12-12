@@ -33,6 +33,10 @@ module tt_um_bitty (
     assign clks_per_bit[12:8] = uio_in[7:3];
     assign clks_per_bit[7:0] = ui_in[7:0];
 
+    assign uo_out[7:1] = 7'b0;
+    assign uio_out[7:0] = 8'b0;
+    assign uio_oe[7:0] = 8'b0;
+
     /* verilator lint_off UNUSED */
     wire _unused = &{ena, uio_in[2:1], uio_out, uo_out[7:1], 1'b0, uio_oe};
 
