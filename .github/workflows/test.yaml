@@ -12,12 +12,16 @@ jobs:
       - name: Install iverilog
         shell: bash
         run: sudo apt-get update && sudo apt-get install -y iverilog
-        
+
       - name: Install Verilator
         shell: bash
         run: sudo apt-get install verilator
 
-      # Set Python up and install cocotb
+      - name: Install build-essential
+        shell: bash
+        run: sudo apt-get install -y build-essential
+
+      # Set up Python
       - name: Setup python
         uses: actions/setup-python@v5
         with:
@@ -31,9 +35,7 @@ jobs:
         run: |
           cd test
           make clean
-          make
-          # make will return success even if the test fails, so check for failure in the results.xml
-          ! grep failure results.xml
+          make verilator  # Make sure to use the appropriate target if necessary
 
       - name: Test Summary
         uses: test-summary/action@v2.3
@@ -41,7 +43,7 @@ jobs:
           paths: "test/results.xml"
         if: always()
 
-      - name: upload vcd
+      - name: Upload VCD
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:

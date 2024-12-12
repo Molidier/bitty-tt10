@@ -1,4 +1,2 @@
 cocotb==1.9.1
 pytest==8.2.2
-build-essential
-libpython3-dev
