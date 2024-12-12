@@ -37,9 +37,6 @@ jobs:
       - name: Install Verilator
         run: sudo apt-get update && sudo apt-get install -y verilator
 
-      - name: Debug lint logs
-        run: ls -R runs/wokwi/
-
       - name: GL test
         uses: TinyTapeout/tt-gds-action/gl_test@tt10
 
