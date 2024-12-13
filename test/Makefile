@@ -7,7 +7,6 @@ TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = \
   project_final.v \
-  fui_control_2.v \
   alu.v \
   bitty.v \
   branch_logic.v \

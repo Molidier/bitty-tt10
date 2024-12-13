@@ -18,7 +18,6 @@ project:
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "project_final.v"
-    - "fui_control_2.v"
     - "alu.v"
     - "bitty.v"
     - "branch_logic.v"
