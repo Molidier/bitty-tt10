@@ -107,7 +107,7 @@ class TB:
         """Wait for the RX `done` signal to go high or timeout."""
         try:
             self.dut._log.info("Waiting for RX done signal...")
-            await First(RisingEdge(self.dut.user_project.top_inst.uart_inst.rx_done), Timer(timeout_us, units="us"))
+            await First(RisingEdge(self.dut.user_project.uart_inst.rx_done), Timer(timeout_us, units="us"))
             self.dut._log.info("RX done signal received.")
         except TimeoutError:
             self.dut._log.info("Timeout waiting for RX done signal.")
@@ -190,15 +190,15 @@ async def uart_module_test(dut):
                     dut._log.info(f"Received flag byte: {flag_byte:X}")
                     await process_flag(flag_byte)
 
-                await FallingEdge(dut.user_project.top_inst.bitty_inst.done)
+                await FallingEdge(dut.user_project.bitty_inst.done)
 
                 i = emulator.evaluate(i)
-                pc = int(dut.user_project.top_inst.pc_inst.d_out.value)
+                pc = int(dut.user_project.pc_inst.d_out.value)
 
                 rx_register = (instruction & 0xE000) >> 13
 
                 try:
-                    dut_rx_value = int(dut.user_project.top_inst.bitty_inst.out[rx_register].value)
+                    dut_rx_value = int(dut.user_project.bitty_inst.out[rx_register].value)
                 except Exception as e:
                     dut_rx_value = 0
                     dut._log.warning(f"Error reading DUT RX register {rx_register}: {e}")
