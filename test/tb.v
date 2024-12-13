@@ -22,6 +22,11 @@ module tb ();
   reg [1:0] uio_in_2to1;
   reg uio_in_0;
 
+`ifdef GL_TEST
+  wire VPWR = 1'b1;
+  wire VGND = 1'b0;
+`endif
+
   wire [6:0] uo_out_7to1;
   wire uo_out_0;
   wire [7:0] uio_out;
