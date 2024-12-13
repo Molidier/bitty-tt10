@@ -60,54 +60,57 @@ class TB:
 
         # Assign the decremented value to self.dut.clks_per_bit.value
         # Assign the decremented value back to the DUT inputs
-        self.dut.ui_in.value = (int(self.clks_per_bit) -1) & 0xFF  # Set LSB (bits 7:0)
-        self.dut.uio_in_7to3.value = ((int(self.clks_per_bit) -1)  >> 8) & 0x1F  # Set MSB (bits 12:8)
+        self.dut.ui_in.value = (int(self.clks_per_bit)) & 0xFF  # Set LSB (bits 7:0)
+        self.dut.uio_in_7to3.value = ((int(self.clks_per_bit))  >> 8) & 0x1F  # Set MSB (bits 12:8)
 
 
-        print("Resetting DUT")
+        self.dut._log.info("Resetting DUT")
         await Timer(100, units="us")  # Hold reset for 100 microseconds
         self.reset.value = 1
-        print("DUT reset complete")
+        self.dut._log.info("DUT reset complete")
 
     async def send_uart_data(self, data):
         """Simulate sending a byte over UART."""
         self.rx_data_bit.value = 0  # Start bit
-        print("TX -> RX Start bit: 0")
+        self.dut._log.info("TX -> RX Start bit: 0")
         await Timer(self.bit_time_ns, units="ns")
 
         for i in range(8):  # Data bits (LSB first)
             bit = (data >> i) & 1
             self.rx_data_bit.value = bit
-            print(f"TX -> RX Bit {i}: {bit}")
+            self.dut._log.info(f"TX -> RX Bit {i}: {bit}")
             await Timer(self.bit_time_ns, units="ns")
 
         self.rx_data_bit.value = 1  # Stop bit
-        print("TX -> RX Stop bit: 1")
+        self.dut._log.info("TX -> RX Stop bit: 1")
 
     async def transmit_from_tx(self):
         """Capture the UART transmission."""
-        print("before tx star bit")
+        self.dut._log.info("before tx star bit")
         await FallingEdge(self.tx_data_bit)  # Wait for start bit
-        print("RX <- TX Start bit: 0")
+        await Timer(self.bit_time_ns, units="ns")
+        self.dut._log.info("RX <- TX Start bit: 0")
+
         received_bits = []
 
         for i in range(8):  # Capture 8 data bits
             await Timer(self.bit_time_ns, units="ns")
             bit = int(self.tx_data_bit.value)
             received_bits.append(bit)
-            print(f"RX <- TX Bit {i}: {bit}")
+            self.dut._log.info(f"RX <- TX Bit {i}: {bit}")
 
-        print("RX <- TX Stop bit: 1")
+        self.dut._log.info("RX <- TX Stop bit: 1")
+        await Timer(self.bit_time_ns, units="ns")
         return sum((bit << i) for i, bit in enumerate(received_bits))
 
     async def wait_for_rx_done(self, timeout_us=100):
         """Wait for the RX `done` signal to go high or timeout."""
         try:
-            print("Waiting for RX done signal...")
+            self.dut._log.info("Waiting for RX done signal...")
             await First(RisingEdge(self.dut.user_project.top_inst.uart_inst.rx_done), Timer(timeout_us, units="us"))
-            print("RX done signal received.")
+            self.dut._log.info("RX done signal received.")
         except TimeoutError:
-            print("Timeout waiting for RX done signal.")
+            self.dut._log.info("Timeout waiting for RX done signal.")
             self.dut._log.warning("Timeout waiting for RX done signal.")
 
 @cocotb.test()
@@ -129,54 +132,54 @@ async def uart_module_test(dut):
     async def uart_receiver():
         while True:
             flag_byte = await tb.transmit_from_tx()
-            print(f"Received Flag Byte: 0x{flag_byte:02X}")
+            dut._log.info(f"Received Flag Byte: 0x{flag_byte:02X}")
             await flag_queue.put(flag_byte)
-            print("Flag byte added to queue.")
+            dut._log.info("Flag byte added to queue.")
 
     uart_task = cocotb.start_soon(uart_receiver())
 
     async def process_flag(flag_byte):
         """Process UART flag."""
-        print(f"Processing Flag Byte: 0x{flag_byte:02X}")
+        dut._log.info(f"Processing Flag Byte: 0x{flag_byte:02X}")
         if flag_byte == 0x03:  # Instruction
-            print("Instruction flag received.")
+            dut._log.info("Instruction flag received.")
             address = await flag_queue.get()
-            print(f"Address received: {address}")
+            dut._log.info(f"Address received: {address}")
             if address < len(instruction_set):
                 instruction = instruction_set[address]
-                print(f"Instruction: 0x{instruction:04X}")
+                dut._log.info(f"Instruction: 0x{instruction:04X}")
                 await tb.send_uart_data(instruction >> 8)  # High byte
                 await tb.wait_for_rx_done()
                 await tb.send_uart_data(instruction & 0xFF)  # Low byte
         elif flag_byte == 0x01:  # Load
-            print("Load flag received.")
+            dut._log.info("Load flag received.")
             address = await flag_queue.get()
-            print(f"Address received: {address}")
+            dut._log.info(f"Address received: {address}")
             if address < len(emulator_memory):
                 data = emulator_memory[address]
-                print(f"Loaded Data: 0x{data:04X} from address 0x{address:02X}")
+                dut._log.info(f"Loaded Data: 0x{data:04X} from address 0x{address:02X}")
                 await tb.send_uart_data(data >> 8)
                 await tb.wait_for_rx_done()
                 await tb.send_uart_data(data & 0xFF)
         elif flag_byte == 0x02:  # Store
-            print("Store flag received.")
+            dut._log.info("Store flag received.")
             address = await flag_queue.get()
-            print(f"Address received: {address}")
+            dut._log.info(f"Address received: {address}")
             high_byte = await flag_queue.get()
-            print(f"High byte received: 0x{high_byte:02X}")
+            dut._log.info(f"High byte received: 0x{high_byte:02X}")
             low_byte = await flag_queue.get()
-            print(f"Low byte received: 0x{low_byte:02X}")
+            dut._log.info(f"Low byte received: 0x{low_byte:02X}")
             emulator_memory[address] = (high_byte << 8) | low_byte
-            print(f"Stored 0x{emulator_memory[address]:04X} at address 0x{address:02X}")
+            dut._log.info(f"Stored 0x{emulator_memory[address]:04X} at address 0x{address:02X}")
 
     try:
         pc = 0
         i = 0
         with open(log_file, "w") as log:
             while pc < len(instruction_set):
-                print("start")
+                dut._log.info("start")
                 flag_byte = await flag_queue.get()
-                print("took flag")
+                dut._log.info("took flag")
                 await process_flag(flag_byte)
 
                 instruction = instruction_set[pc]
