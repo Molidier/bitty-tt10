@@ -115,7 +115,6 @@ class TB:
 
 @cocotb.test()
 async def uart_module_test(dut):
-    #verilated.traceEverOn(True)  # This enables tracing
     """Integrated UART and instruction processing test."""
     tb = TB(dut)
     log_file = "uart_emulator_log.txt"
@@ -172,11 +171,21 @@ async def uart_module_test(dut):
             emulator_memory[address] = (high_byte << 8) | low_byte
             dut._log.info(f"Stored 0x{emulator_memory[address]:04X} at address 0x{address:02X}")
 
+    # Timer coroutine for the 10-minute limit
+    async def timeout_timer():
+        dut._log.info("10-minute timer started.")
+        await Timer(10 * 60 * 1e9, units="ns")  # 10 minutes in nanoseconds
+        dut._log.error("Test timeout: Exceeded 10 minutes.")
+        raise TimeoutError("Test exceeded the 10-minute limit.")
+
     try:
+        # Start the 10-minute timeout timer
+        cocotb.start_soon(timeout_timer())
+
         pc = 0
         i = 0
         with open(log_file, "w") as log:
-            while pc < len(instruction_set):
+            while pc < len(instruction_set) or pc < 255:
                 dut._log.info("start")
                 flag_byte = await flag_queue.get()
                 dut._log.info("took flag")
@@ -214,6 +223,9 @@ async def uart_module_test(dut):
                         log.write(f"PC {pc:04X} VS em_i {i:04X}\n")
                         log.write(f"ERROR -> RX mismatch (DUT: {dut_rx_value:04X}, Emulator: {emulator_rx_value:04X})\n")
                         break
+
+    except TimeoutError:
+        dut._log.error("Test ended due to timeout.")
 
     except Exception as e:
         dut._log.error(f"Test error: {e}")
