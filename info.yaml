@@ -37,9 +37,9 @@ project:
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: "rx_data_bit"
-  ui[1]: "sel_clks_per_bit[0]"
-  ui[2]: "sel_clks_per_bit[1]"
+  ui[0]: ""
+  ui[1]: ""
+  ui[2]: ""
   ui[3]: ""
   ui[4]: ""
   ui[5]: ""
@@ -57,9 +57,9 @@ pinout:
   uo[7]: ""
 
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
+  uio[0]: "rx_data_bit"
+  uio[1]: "sel_clks_per_bit[0]"
+  uio[2]: "sel_clks_per_bit[1]"
   uio[3]: ""
   uio[4]: ""
   uio[5]: ""

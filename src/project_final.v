@@ -24,20 +24,21 @@ module tt_um_bitty (
     wire reset;
     wire rx_data_bit;
     wire tx_data_bit;
-    wire [1:0] sel_clks_per_bit;
+    wire [1:0] clks_per_bit;
 
     assign reset = rst_n;
-    assign rx_data_bit = ui_in[0];
+    assign rx_data_bit = uio_in[0];
     //assign uio_oe[7] = 1'b1; //to enable output for this port
 
-    assign sel_clks_per_bit = ui_in[2:1];
+    assign clks_per_bit = uio_in[2:1];
+    //assign clks_per_bit[7:0] = ui_in[7:0];
 
     assign uo_out[7:1] = 7'b0;
     assign uio_out[7:0] = 8'b0;
     assign uio_oe[7:0] = 8'b0;
 
     /* verilator lint_off UNUSED */
-    wire _unused = &{ena, uio_in, ui_in[7:3], uio_out, uo_out[7:1], 1'b0, uio_oe};
+    wire _unused = &{ena, uio_in[7:3], uio_out, uo_out[7:1], 1'b0, uio_oe, ui_in};
 
     assign uo_out[0] = tx_data_bit; //output
 
@@ -104,7 +105,7 @@ module tt_um_bitty (
     uart_module uart_inst(
         .clk(clk), 
         .rst(reset),
-        .sel_baude_rate(sel_clks_per_bit),
+        .sel_baude_rate(clks_per_bit),
         .rx_data_bit(rx_data_bit),
         .rx_done(rx_done),
         .tx_data_bit(tx_data_bit),
@@ -129,6 +130,7 @@ module tt_um_bitty (
         .d_in(new_pc),   // Use new_pc for the input here
         .d_out(addr)
     );
+
     wire [7:0] for_unused_out_8;
 
 
@@ -148,7 +150,6 @@ module tt_um_bitty (
         .sel(uart_sel),
         .out({for_unused_out_15, tx_en})
     );
-
 
     bitty bitty_inst(
         .clk(clk),

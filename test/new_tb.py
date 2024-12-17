@@ -28,9 +28,9 @@ class TB:
 
         # Map I/O signals
         self.reset = dut.rst_n
-        self.rx_data_bit = dut.ui_in_0
+        self.rx_data_bit = dut.uio_in_0
         self.tx_data_bit = dut.uo_out_0
-        self.clks_baud_rate = dut.ui_in_2to1
+        self.clks_baud_rate = dut.uio_in_2to1
 
         self.clock = dut.clk
 

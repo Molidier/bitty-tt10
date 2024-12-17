@@ -21,8 +21,9 @@ module uart_module #(
 	output [6:0] HEX1,
 	output [6:0] HEX2*/
 );
-	reg [12:0] clks_per_bit;
-	always@(*) begin
+	/*wire [12:0] clks_per_bit;
+	assign clks_per_bit = 434;*/
+	/*always@(*) begin
 		//clks_per_bit = 5208;
 		case (sel_baude_rate)
 			2'b00:clks_per_bit = 5208; //9600
@@ -32,14 +33,14 @@ module uart_module #(
 			default: clks_per_bit = 5208;
 		endcase
 		
-    end
+    end*/
 
 
 	uart_rx R0(
 		.data_bit(rx_data_bit),
 		.clk(clk),
 		.rst(rst),
-    	.CLKS_PER_BIT(clks_per_bit),
+    	.CLKS_PER_BITS({13'b0}),
 
 		//.receiving(rx_receiving),
 		.done(rx_done),
@@ -50,7 +51,7 @@ module uart_module #(
 		.data_bus(data_tx),
 		.clk(clk),
 		.rstn(rst), 
-    	.CLKS_PER_BIT(clks_per_bit),
+    	.CLKS_PER_BITS({13'b0}),
 		.run(tx_en), //active when low
 		//.transmitting(tx_transmitting),
 		.done(tx_done),

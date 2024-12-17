@@ -1,7 +1,7 @@
 module uart_rx
 #(
     parameter data_width   = 8,
-              //CLKS_PER_BIT = 5208, // 50 MHz / 9600 = 5208.
+              CLKS_PER_BIT = 434, // 50 MHz / 9600 = 5208.
               IDLE         = 3'b000,
               START_BIT    = 3'b001,
               DATA_BITS    = 3'b010,
@@ -13,7 +13,7 @@ module uart_rx
     input                     data_bit,
     input                     clk,
     input                     rst,
-    input [12:0]              CLKS_PER_BIT,//115200 -> 433 -> clks 9 bits
+    input [12:0]              CLKS_PER_BITS,//115200 -> 433 -> clks 9 bits
     output reg                done,
     output [data_width - 1:0] data_bus
 );
