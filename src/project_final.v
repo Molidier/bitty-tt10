@@ -129,20 +129,24 @@ module tt_um_bitty (
         .d_in(new_pc),   // Use new_pc for the input here
         .d_out(addr)
     );
+    wire [7:0] for_unused_out_8;
 
-    mux2to1_8 mux2to1_txdata(
-        .reg0(data_to_uart_from_fetch),
-        .reg1(from_bitty_to_uart),
+
+    mux2to1 mux2to1_txdata(
+        .reg0({8'b0, data_to_uart_from_fetch}),
+        .reg1({8'b0, from_bitty_to_uart}),
         .sel(uart_sel),
-        .out(tx_data)
+        .out({for_unused_out_8, tx_data})
     );
 
-    mux2to1_1 mux2to1_txen(
+    wire [14:0] for_unused_out_15;
 
-        .reg0(tx_en_fiu),
-        .reg1(tx_en_bitty),
+    mux2to1 mux2to1_txen(
+
+        .reg0({15'b0, tx_en_fiu}),
+        .reg1({15'b0,tx_en_bitty}),
         .sel(uart_sel),
-        .out(tx_en)
+        .out({for_unused_out_15, tx_en})
     );
 
 
