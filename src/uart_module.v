@@ -5,6 +5,7 @@ module uart_module #(
 (
 	input        clk, 
 	input        rst,
+	/* verilator lint_off UNUSEDSIGNAL */
 	input [1:0] sel_baude_rate,
 
 	input        rx_data_bit,
