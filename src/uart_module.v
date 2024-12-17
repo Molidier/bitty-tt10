@@ -5,7 +5,7 @@ module uart_module #(
 (
 	input        clk, 
 	input        rst,
-	input [12:0] clks_per_bit,
+	input [1:0] sel_baude_rate,
 
 	input        rx_data_bit,
 	output       rx_done,
@@ -21,6 +21,19 @@ module uart_module #(
 	output [6:0] HEX1,
 	output [6:0] HEX2*/
 );
+	reg [15:0] clks_per_bit;
+	always@(*) begin
+		//clks_per_bit = 5208;
+		case (sel_baude_rate)
+			2'b00:clks_per_bit = 5208; //9600
+			2'b01:clks_per_bit = 2604; //19200
+			2'b10:clks_per_bit = 868; //57600
+			2'b11:clks_per_bit = 434; //115200
+			default: clks_per_bit = 5208;
+		endcase
+		
+    end
+
 
 	uart_rx R0(
 		.data_bit(rx_data_bit),
@@ -42,21 +55,6 @@ module uart_module #(
 		//.transmitting(tx_transmitting),
 		.done(tx_done),
 		.data_bit(tx_data_bit)
-	);
-
-	/*decoder_hex D0(
-		.in(recieved_data),
-		.HEX0(HEX0),
-		.HEX1(HEX1),
-		.HEX2(HEX2)
-	);*/
-	
-
-	//uart_rx			R0(rx_data_bit, clk, rst, /*rx_in_idle, rx_error,*/rx_receiving, rx_done, recieved_data);
-	
-	//uart_tx        T0(data_tx, clk, rst, tx_en, /*rx_in_idle,*/  tx_transmitting, tx_done, tx_data_bit);
-
-	//decoder_hex    D0(recieved_data, HEX0, HEX1, HEX2);
-				
+	);			
 
 endmodule
