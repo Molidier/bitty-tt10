@@ -12,6 +12,7 @@ module uart_tx
     input [data_width - 1:0] data_bus,
     input                    clk,
     input                    rstn,
+    /* verilator lint_off UNUSEDSIGNAL */
     input [12:0]              CLKS_PER_BITS,
     input                    run,
     output                   done,

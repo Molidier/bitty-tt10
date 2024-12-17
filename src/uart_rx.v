@@ -13,6 +13,7 @@ module uart_rx
     input                     data_bit,
     input                     clk,
     input                     rst,
+    /* verilator lint_off UNUSEDSIGNAL */
     input [12:0]              CLKS_PER_BITS,//115200 -> 433 -> clks 9 bits
     output reg                done,
     output [data_width - 1:0] data_bus
