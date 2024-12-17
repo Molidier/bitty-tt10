@@ -21,7 +21,7 @@ module uart_module #(
 	output [6:0] HEX1,
 	output [6:0] HEX2*/
 );
-	reg [15:0] clks_per_bit;
+	reg [12:0] clks_per_bit;
 	always@(*) begin
 		//clks_per_bit = 5208;
 		case (sel_baude_rate)

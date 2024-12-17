@@ -12,7 +12,7 @@ module uart_tx
     input [data_width - 1:0] data_bus,
     input                    clk,
     input                    rstn,
-    input [15:0]              CLKS_PER_BIT,
+    input [12:0]              CLKS_PER_BIT,
     input                    run,
     output                   done,
     output                   data_bit

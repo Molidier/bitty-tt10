@@ -13,7 +13,7 @@ module uart_rx
     input                     data_bit,
     input                     clk,
     input                     rst,
-    input [15:0]              CLKS_PER_BIT,//115200 -> 433 -> clks 9 bits
+    input [12:0]              CLKS_PER_BIT,//115200 -> 433 -> clks 9 bits
     output reg                done,
     output [data_width - 1:0] data_bus
 );
