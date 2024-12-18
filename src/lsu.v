@@ -30,7 +30,6 @@ module lsu(
     // State encoding
     parameter SEND_FLAG = 3'b001;
     parameter SEND_ADDR = 3'b010;
-    //parameter WAIT_RX = 3'b011;
     parameter RECEIVE_INST_LOW = 3'b011;
     parameter RECEIVE_INST_HIGH = 3'b100;
     parameter SEND_INST_HIGH = 3'b101;
@@ -139,13 +138,9 @@ module lsu(
                 if (tx_done) begin
                     if (en==LOAD) begin 
                         next_state = RECEIVE_INST_HIGH; 
-                        $display("SENDING ADDRESS LOAD IN LS");
-
                     end
                     else if (en==STORE) begin 
                         next_state = SEND_INST_HIGH;  
-                        $display("SENDING ADDRESS STORE IN LS");
-
                     end 
                     else begin
                         next_state = SEND_ADDR;
