@@ -5,6 +5,7 @@ module uart_module #(
 (
 	input        clk, 
 	input        rst,
+	input [12:0] clks_per_bit,
 	/* verilator lint_off UNUSEDSIGNAL */
 	input [1:0] sel_baude_rate,
 
@@ -41,7 +42,7 @@ module uart_module #(
 		.data_bit(rx_data_bit),
 		.clk(clk),
 		.rst(rst),
-    	.CLKS_PER_BITS({13'b0}),
+    	.CLKS_PER_BIT(clks_per_bit),
 
 		//.receiving(rx_receiving),
 		.done(rx_done),
@@ -52,7 +53,7 @@ module uart_module #(
 		.data_bus(data_tx),
 		.clk(clk),
 		.rstn(rst), 
-    	.CLKS_PER_BITS({13'b0}),
+    	.CLKS_PER_BIT(clks_per_bit),
 		.run(tx_en), //active when low
 		//.transmitting(tx_transmitting),
 		.done(tx_done),
