@@ -1,7 +1,6 @@
 module uart_tx
 #(
     parameter data_width   = 8,
-              //CLKS_PER_BIT = 433, // 50 MHz / 9600 = 5208.
               IDLE         = 3'b000,
               START_BIT    = 3'b001,
               DATA_BITS    = 3'b010,
@@ -14,7 +13,6 @@ module uart_tx
     input                    rstn,
     input [12:0]              CLKS_PER_BIT,
     input                    run,
-    //output                   transmitting,
     output                   done,
     output                   data_bit
 );
@@ -26,7 +24,6 @@ module uart_tx
     reg        data_reg;
      
     // Output assignments
-    //assign transmitting = PS != IDLE;
     assign done         = PS == DONE;
    
     // FSM: PS synchronization
@@ -40,7 +37,7 @@ module uart_tx
     end
 
     // FSM: Data and control logic
-    always @(posedge clk) begin
+    always @(negedge clk) begin
         // Default values
         data_reg<=1'b1;
         clk_counter<=clk_counter;
