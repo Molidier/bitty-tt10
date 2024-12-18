@@ -1,7 +1,6 @@
 module uart_tx
 #(
     parameter data_width   = 8,
-              CLKS_PER_BIT = 434, // 50 MHz / 9600 = 5208.
               IDLE         = 3'b000,
               START_BIT    = 3'b001,
               DATA_BITS    = 3'b010,
@@ -12,8 +11,7 @@ module uart_tx
     input [data_width - 1:0] data_bus,
     input                    clk,
     input                    rstn,
-    /* verilator lint_off UNUSEDSIGNAL */
-    input [12:0]              CLKS_PER_BITS,
+    input [12:0]              CLKS_PER_BIT,
     input                    run,
     output                   done,
     output                   data_bit
