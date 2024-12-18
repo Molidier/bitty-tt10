@@ -6,6 +6,7 @@
 `default_nettype none
 
 module tt_um_bitty (
+    /* verilator lint_off UNUSEDSIGNAL */
     input  wire [7:0] ui_in,    // Dedicated inputs
     /* verilator lint_off UNDRIVEN */
     output wire [7:0] uo_out,   // Dedicated outputs
@@ -37,7 +38,7 @@ module tt_um_bitty (
     assign uio_oe[7:0] = 8'b0;
 
     /* verilator lint_off UNUSED */
-    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe};
+    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, ui_in, uio_in[7:3]};
 
     assign uo_out[0] = tx_data_bit; //output
 
@@ -73,10 +74,7 @@ module tt_um_bitty (
     parameter S5 = 4'b0101;
     parameter S6 = 4'b0110;
     parameter S7 = 4'b0111;
-    parameter S8 = 4'b1000;
-    parameter S9 = 4'b1001;
-    parameter S10 = 4'b1010;
-    parameter S11 = 4'b1011;
+
 
     //Use in FSM
     reg stop_for_rw;
@@ -141,19 +139,23 @@ module tt_um_bitty (
         .d_out(addr)
     );
 
-    mux2to1_8 mux2to1_txdata(
-        .reg0(data_to_uart_from_fetch),
-        .reg1(from_bitty_to_uart),
+    wire [7:0] unused_8bit;
+
+    mux2to1 mux2to1_txdata(
+        .reg0({8'b0, data_to_uart_from_fetch}),
+        .reg1({8'b0,from_bitty_to_uart}),
         .sel(uart_sel),
-        .out(tx_data)
+        .out({unused_8bit,tx_data})
     );
 
-    mux2to1_1 mux2to1_txen(
+    wire [14:0] unused_15bit;
 
-        .reg0(tx_en_fiu),
-        .reg1(tx_en_bitty),
+    mux2to1 mux2to1_txen(
+
+        .reg0({15'b0, tx_en_fiu}),
+        .reg1({15'b0, tx_en_bitty}),
         .sel(uart_sel),
-        .out(tx_en)
+        .out({unused_15bit, tx_en})
     );
 
 
@@ -172,7 +174,7 @@ module tt_um_bitty (
     );
 
     always @(posedge clk) begin
-        if(!reset || done) begin
+        if(!reset) begin
             cur_state <= S0;
         end
         else begin
@@ -189,25 +191,18 @@ module tt_um_bitty (
             S0: begin
                 stop_for_rw = 1'b0;
             end
-            S3: begin
+            S2: begin
                 en_pc = 1'b1;
             end 
-            S7: begin
+            S5: begin
                 run_bitty = 1'b1;
             end
-            S8: begin
+            S6: begin
                 stop_for_rw = 1'b0;
             end
-            S9: begin
+            S7: begin
                 uart_sel = 1'b1;
                 stop_for_rw = 1'b1;
-            end
-            S10: begin
-                uart_sel = 1'b0;
-                stop_for_rw = 1'b0;
-            end
-            S11: begin
-                stop_for_rw = 1'b0;
             end
             default: begin
                  run_bitty = 0;
@@ -221,14 +216,12 @@ module tt_um_bitty (
         case(cur_state)
             S0: next_state = (fetch_done==1) ? S1:S0;
             S1: next_state = S2;
-            S2: next_state = S3;
-            S3: next_state = (mem_out[1:0]==2'b11) ? S4:S5;
-            S4: next_state = S6;
-            S5: next_state = S6;
-            S6: next_state = S7; 
-            S7: next_state = (mem_out[1:0]==2'b11) ? S9:S8;
-            S8: next_state = (done==1) ? S0:S8;
-            S9: next_state = (done==1) ? S0:S9;
+            S2: next_state = (mem_out[1:0]==2'b11) ? S3:S4;
+            S3: next_state = S5;
+            S4: next_state = S5; 
+            S5: next_state = (mem_out[1:0]==2'b11) ? S7:S6;
+            S6: next_state = (done==1) ? S0:S6;
+            S7: next_state = (done==1) ? S0:S7;
             default: next_state = S0;
         endcase
     end
