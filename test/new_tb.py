@@ -30,6 +30,7 @@ class TB:
         self.reset = dut.rst_n
         self.rx_data_bit = dut.uio_in_0
         self.tx_data_bit = dut.uo_out_0
+        self.sel_baude_rate = dut.uio_in_2to1
 
 
         # Safely resolve MSB and LSB values
