@@ -44,6 +44,8 @@ class BittyInstructionGenerator:
                             branch_instr = immed << 4
                             branch_cond = random.choice([2, 6, 10])
                             file2.write(f"{branch_instr + branch_cond:04x}\n")
+                            #file2.write(f"{branch_instr + 0x6:04x}\n")
+                            #file2.write(f"{branch_instr + 0xA:04x}\n")
 
 
         except IOError:

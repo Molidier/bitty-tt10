@@ -1,7 +1,7 @@
 module uart_rx
 #(
     parameter data_width   = 8,
-              CLKS_PER_BIT = 434, // 50 MHz / 9600 = 5208.
+              //CLKS_PER_BIT = 433, // 50 MHz / 9600 = 5208.
               IDLE         = 3'b000,
               START_BIT    = 3'b001,
               DATA_BITS    = 3'b010,
@@ -13,8 +13,8 @@ module uart_rx
     input                     data_bit,
     input                     clk,
     input                     rst,
-    /* verilator lint_off UNUSEDSIGNAL */
-    input [12:0]              CLKS_PER_BITS,//115200 -> 433 -> clks 9 bits
+    input [12:0]              CLKS_PER_BIT,
+    //output                    receiving,
     output reg                done,
     output [data_width - 1:0] data_bus
 );
@@ -27,8 +27,8 @@ module uart_rx
     reg [data_width - 1:0] data_bus_wire;
      
     // Output assignments
+    //assign receiving = PS != IDLE;
     assign data_bus = data_bus_wire;
-
 
     // FSM: PS synchronization
     always @(posedge clk) begin
@@ -42,7 +42,7 @@ module uart_rx
 
 
     // FSM: Data and control logic
-    always @(negedge clk) begin
+    always @(posedge clk) begin
         // Default values
         done <= 1'b0;
         clk_counter <= clk_counter;
