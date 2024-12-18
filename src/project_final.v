@@ -6,6 +6,7 @@
 `default_nettype none
 
 module tt_um_bitty (
+    /* verilator lint_off UNUSEDSIGNAL */
     input  wire [7:0] ui_in,    // Dedicated inputs
     /* verilator lint_off UNDRIVEN */
     output wire [7:0] uo_out,   // Dedicated outputs
@@ -37,7 +38,7 @@ module tt_um_bitty (
     assign uio_oe[7:0] = 8'b0;
 
     /* verilator lint_off UNUSED */
-    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe};
+    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, ui_in, uio_in[7:3]};
 
     assign uo_out[0] = tx_data_bit; //output
 
