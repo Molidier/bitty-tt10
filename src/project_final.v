@@ -220,7 +220,6 @@ module tt_um_bitty (
             S3: next_state = (mem_out[1:0]==2'b11) ? S4:S5;
             S4: next_state = S7;
             S5: next_state = S7;
-            S6: next_state = S7; 
             S7: next_state = (mem_out[1:0]==2'b11) ? S9:S8;
             S8: next_state = (done==1) ? S0:S8;
             S9: next_state = (done==1) ? S0:S9;
