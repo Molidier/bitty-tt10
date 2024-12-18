@@ -24,16 +24,18 @@ module tt_um_bitty (
     wire reset;
     wire rx_data_bit;
     wire tx_data_bit;
-    wire [12:0] clks_per_bit;
+    reg [12:0] clks_per_bit;
     wire [1:0] sel_baude_rate;
 
     assign reset = rst_n;
     assign rx_data_bit = uio_in[0];
     //assign uio_oe[7] = 1'b1; //to enable output for this port
 
-    assign clks_per_bit[12:8] = uio_in[7:3];
-    assign clks_per_bit[7:0] = ui_in[7:0];
+    //assign clks_per_bit[12:8] = uio_in[7:3];
+    //assign clks_per_bit[7:0] = ui_in[7:0];
     assign sel_baude_rate = uio_in[2:1];
+
+
 
     assign uo_out[7:1] = 7'b0;
     assign uio_out[7:0] = 8'b0;
@@ -101,7 +103,17 @@ module tt_um_bitty (
         .done_out(fetch_done)
     );
 	 
-
+    always@(*) begin
+		//clks_per_bit = 5208;
+		case (sel_baude_rate)
+			2'b00:clks_per_bit = 5208; //9600
+			2'b01:clks_per_bit = 2604; //19200
+			2'b10:clks_per_bit = 868; //57600
+			2'b11:clks_per_bit = 434; //115200
+			default: clks_per_bit = 5208;
+		endcase
+		
+    end
 
     // UART module instance
     uart_module uart_inst(

@@ -7,7 +7,7 @@ module uart_module #(
 	input        rst,
 	input [12:0] clks_per_bit,
 	/* verilator lint_off UNUSEDSIGNAL */
-	input [1:0] sel_baude_rate,
+	//input [1:0] sel_baude_rate,
 
 	input        rx_data_bit,
 	output       rx_done,

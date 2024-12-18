@@ -63,7 +63,7 @@ class TB:
         # Assign the decremented value back to the DUT inputs
         self.dut.ui_in.value = (int(self.clks_per_bit)) & 0xFF  # Set LSB (bits 7:0)
         self.dut.uio_in_7to3.value = ((int(self.clks_per_bit))  >> 8) & 0x1F  # Set MSB (bits 12:8)
-
+        self.dut.uio_in_2to1.value = 3
 
         self.dut._log.info("Resetting DUT")
         await Timer(100, units="us")  # Hold reset for 100 microseconds
