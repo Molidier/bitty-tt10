@@ -74,8 +74,7 @@ module tt_um_bitty (
     parameter S5 = 4'b0101;
     parameter S6 = 4'b0110;
     parameter S7 = 4'b0111;
-    parameter S8 = 4'b1000;
-    parameter S9 = 4'b1001;
+
 
     //Use in FSM
     reg stop_for_rw;
@@ -192,16 +191,16 @@ module tt_um_bitty (
             S0: begin
                 stop_for_rw = 1'b0;
             end
-            S3: begin
+            S2: begin
                 en_pc = 1'b1;
             end 
-            S7: begin
+            S5: begin
                 run_bitty = 1'b1;
             end
-            S8: begin
+            S6: begin
                 stop_for_rw = 1'b0;
             end
-            S9: begin
+            S7: begin
                 uart_sel = 1'b1;
                 stop_for_rw = 1'b1;
             end
@@ -216,16 +215,19 @@ module tt_um_bitty (
     always @(*) begin
         case(cur_state)
             S0: next_state = (fetch_done==1) ? S1:S0;
-            S1: next_state = S3;
-            S3: next_state = (mem_out[1:0]==2'b11) ? S4:S5;
-            S4: next_state = S7;
-            S5: next_state = S7;
-            S7: next_state = (mem_out[1:0]==2'b11) ? S9:S8;
-            S8: next_state = (done==1) ? S0:S8;
-            S9: next_state = (done==1) ? S0:S9;
+            S1: next_state = S2;
+            S2: next_state = (mem_out[1:0]==2'b11) ? S3:S4;
+            S3: next_state = S5;
+            S4: next_state = S5; 
+            S5: next_state = (mem_out[1:0]==2'b11) ? S7:S6;
+            S6: next_state = (done==1) ? S0:S6;
+            S7: next_state = (done==1) ? S0:S7;
             default: next_state = S0;
         endcase
     end
+
+
+
 
 
 endmodule
