@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Moldir Azhimukhanbet
+ * Copyright (c) 2024 Moldir Azhimukhanbet, Maveric Lab
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -28,8 +28,8 @@ module tt_um_bitty (
     wire [1:0] sel_baude_rate;
 
     assign reset = rst_n;
-    assign rx_data_bit = uio_in[0];
-    assign sel_baude_rate = uio_in[2:1];
+    assign rx_data_bit = ui_in[0];
+    assign sel_baude_rate = ui_in[2:1];
 
 
 
@@ -38,7 +38,7 @@ module tt_um_bitty (
     assign uio_oe[7:0] = 8'b0;
 
     /* verilator lint_off UNUSED */
-    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, ui_in, uio_in[7:3]};
+    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, uio_in, ui_in[7:3]};
 
     assign uo_out[0] = tx_data_bit; //output
 

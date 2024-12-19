@@ -28,29 +28,18 @@ class TB:
 
         # Map I/O signals
         self.reset = dut.rst_n
-        self.rx_data_bit = dut.uio_in_0
+        self.rx_data_bit = dut.ui_in_0
         self.tx_data_bit = dut.uo_out_0
-        self.sel_baude_rate = dut.uio_in_2to1
+        self.sel_baude_rate = dut.ui_in_2to1
 
 
         # Safely resolve MSB and LSB values
-        self.clks_per_bit_msb = self.resolve_binary_value(dut.uio_in_7to3, 0, 4)  # Extract bits 7:3
-        self.clks_per_bit_lsb = self.resolve_binary_value(dut.ui_in, 0, 7)   # Extract bits 7:0
-        self.clks_per_bits = (self.clks_per_bit_msb << 8) | self.clks_per_bit_lsb
         # Reconstruct the full 13-bit value from MSB and LSB
         #self.clks_per_bit = (self.clks_per_bit_msb << 8) | self.clks_per_bit_lsb
         self.clock = dut.clk
 
         # Start the clock
         cocotb.start_soon(Clock(self.clock, 1e9 / clk_freq, units="ns").start())
-    def resolve_binary_value(self, signal, start_bit, end_bit):
-        """Resolve a portion of a signal's binary value safely."""
-        value = signal.value
-        if 'x' in str(value) or 'z' in str(value):
-            self.dut._log.warning(f"Signal {signal._name} contains unresolved bits: {value}")
-            return 0  # Default to 0 for unresolved bits
-        return (int(value) >> start_bit) & ((1 << (end_bit - start_bit + 1)) - 1)
-
 
 
 
@@ -58,12 +47,7 @@ class TB:
         """Apply and release active-low reset."""
         self.reset.value = 0
         self.rx_data_bit.value = 1
-
-        # Assign the decremented value to self.dut.clks_per_bit.value
-        # Assign the decremented value back to the DUT inputs
-        self.dut.ui_in.value = (int(self.clks_per_bit)) & 0xFF  # Set LSB (bits 7:0)
-        self.dut.uio_in_7to3.value = ((int(self.clks_per_bit))  >> 8) & 0x1F  # Set MSB (bits 12:8)
-        self.dut.uio_in_2to1.value = 3
+        self.dut.ui_in_2to1.value = 3
 
         self.dut._log.info("Resetting DUT")
         await Timer(100, units="us")  # Hold reset for 100 microseconds
