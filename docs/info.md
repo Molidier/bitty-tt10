@@ -209,13 +209,13 @@ The testbench will:
 #### **Assembling Code**
 To convert `instructions_for_em.txt` into machine code (if needed for testing):
 ```bash
-./er_tool -i instructions_for_em.txt -o output.txt -a
+./er_tool -a -i instructions_for_em.txt -o output.txt 
 ```
 
 #### **Disassembling Code**
 To convert machine code (`output.txt`) back into assembly:
 ```bash
-./er_tool -i output.txt -o reconstructed.txt -d
+./er_tool -d -i output.txt -o instructions_for_em.txt 
 ```
 
 ---
@@ -258,6 +258,10 @@ Following these steps ensures smooth operation from writing or generating instru
 1. **Prerequisites**:
    - Install Python and cocotb.
    - Ensure Verilog simulation tools (e.g., Verilator, ModelSim) are installed.
+   - Use the following command to install the dependencies:
+   ```bash
+      pip install -r requirements.txt
+   ```
 
 2. **Input Files**:
    - Place the instruction file (`instructions_for_em.txt`) in the working directory.
