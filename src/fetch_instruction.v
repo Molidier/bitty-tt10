@@ -7,7 +7,7 @@ module fetch_instruction(
     input wire [7:0] rx_data,  // Data received from UART
     input wire tx_done,        // Signal indicating transmission is done
 
-    input stop_for_rw,
+    input stop_for_rw,         //Stop the FIU while UART works
 
     output [15:0] instruction_out, // 16-bit instruction received
     output tx_start_out,       // Signal to start UART transmission

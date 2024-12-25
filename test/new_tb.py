@@ -170,7 +170,7 @@ async def uart_module_test(dut):
         pc = 0
         i = 0
         with open(log_file, "w") as log:
-            while pc < len(instruction_set) or pc < 255:
+            while pc < len(instruction_set)-1 or pc < 255 or i < 255:
                 dut._log.info("start")
                 flag_byte = await flag_queue.get()
                 dut._log.info("took flag")

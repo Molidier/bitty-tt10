@@ -10,17 +10,7 @@ module bitty(
 
     output tx_en,
     output [7:0] tx_data,
-
     output [15:0] d_out,
-
-    /*output [15:0] reg0,
-    output [15:0] reg1,
-    output [15:0] reg2,
-    output [15:0] reg3,
-    output [15:0] reg4,
-    output [15:0] reg5,
-    output [15:0] reg6,
-    output [15:0] reg7,*/
     output done
 
 );
@@ -141,21 +131,6 @@ module bitty(
 
     // Assigning out array elements to module outputs
     assign d_out = regc;
-
-    /*assign rega = regs;
-    assign regb = out_mux;
-
-    assign regcc = regc;
-    assign regss = regs;*/
-    /*assign reg0 = out[0];
-    assign reg1 = out[1];
-    assign reg2 = out[2];
-    assign reg3 = out[3];
-    assign reg4 = out[4];
-    assign reg5 = out[5];
-    assign reg6 = out[6];
-    assign reg7 = out[7];*/
-   /* assign reginst = instruction;*/
 
 endmodule
 
