@@ -1,7 +1,6 @@
 module lsu(
     input wire clk,
     input wire reset,
-    //input next_instr_en,
 
     input [1:0] en_ls,
     input [15:0] data_to_store,

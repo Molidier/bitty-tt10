@@ -39,89 +39,89 @@ module cpu(
 
 
     always @(*) begin
+        en_inst = 1;
+        en_s = 0;
+        en_c = 0;
+        done = 0;
+        mux_sel = 4'b1001;
+        sel = 3'b0;
+        en = 8'b0;
+        im_d = {8'b0, d_inst[12:5]}; 
+        sel_reg_c = 1'b0;
+        en_ls = 2'b00;
+
+        case (cur_state)
+            S0: begin
+                if(format!=2'b10) begin
+                    en_s = 1;
+                    mux_sel = {1'b0,d_inst[15:13]};
+                    if(format == 2'b01) begin
+                        im_d = {8'b0, d_inst[12:5]}; 
+                    end
+                end
+                sel = 3'b0;
+                done = 0;
                 en_inst = 1;
+            end
+            S1: begin
+                if(format!=2'b10) begin
+                    if(format == 2'b00 | format == 2'b11) begin
+                        mux_sel = {1'b0, d_inst[12:10]};
+                    end
+                    else if(format == 2'b01) begin
+                        mux_sel = 4'b1000;
+                    end
+                    else begin
+                        mux_sel = 4'b1001;
+                    end
+                    sel = d_inst[4:2];
+                end
+                else begin
+                    sel = 3'b0;  
+                    mux_sel = 4'b1001;
+                end
+
+                if(format == 2'b11) begin
+                        if(ls_flag == 0) begin
+                            en_ls = 2'b01;
+                        end
+                        else begin
+                            en_ls = 2'b10;
+                        end
+                end
+                //LSU d_out loaded to reg C
+                if(format==2'b11) begin
+                    sel_reg_c = 1'b1;
+                end
+                en_c = 1'b1;
+                en_inst = 0;
+                done = 0;
+            end
+
+            S2: begin
+                if (format!=2'b10 & format!=2'b11) begin
+                    en[d_inst[15:13]] = 1;
+                end
+                else if(format==2'b11 & ls_flag==0) begin
+                    en[d_inst[15:13]] = 1;
+                end
+                else begin
+                    en = 8'b0; 
+                end
+                sel = 3'b0;
+                done = 1'b1;
+                en_inst = 1;
+            end
+            default: begin
                 en_s = 0;
                 en_c = 0;
                 done = 0;
-                mux_sel = 4'b1001;
                 sel = 3'b0;
                 en = 8'b0;
-                im_d = {8'b0, d_inst[12:5]}; 
-                sel_reg_c = 1'b0;
-                en_ls = 2'b00;
-
-            case (cur_state)
-                S0: begin
-                    if(format!=2'b10) begin
-                        en_s = 1;
-                        mux_sel = {1'b0,d_inst[15:13]};
-                        if(format == 2'b01) begin
-                            im_d = {8'b0, d_inst[12:5]}; 
-                        end
-                    end
-                    sel = 3'b0;
-                    done = 0;
-                    en_inst = 1;
-                end
-                S1: begin
-                    if(format!=2'b10) begin
-                        if(format == 2'b00 | format == 2'b11) begin
-                            mux_sel = {1'b0, d_inst[12:10]};
-                        end
-                        else if(format == 2'b01) begin
-                            mux_sel = 4'b1000;
-                        end
-                        else begin
-                            mux_sel = 4'b1001;
-                        end
-                        sel = d_inst[4:2];
-                    end
-                    else begin
-                        sel = 3'b0;  
-                        mux_sel = 4'b1001;
-                    end
-
-                    if(format == 2'b11) begin
-                            if(ls_flag == 0) begin
-                                en_ls = 2'b01;
-                            end
-                            else begin
-                                en_ls = 2'b10;
-                            end
-                    end
-                    //LSU d_out loaded to reg C
-                    if(format==2'b11) begin
-                        sel_reg_c = 1'b1;
-                    end
-                    en_c = 1'b1;
-                    en_inst = 0;
-                    done = 0;
-                end
-
-                S2: begin
-                    if (format!=2'b10 & format!=2'b11) begin
-                        en[d_inst[15:13]] = 1;
-                    end
-                    else if(format==2'b11 & ls_flag==0) begin
-                        en[d_inst[15:13]] = 1;
-                    end
-                    else begin
-                        en = 8'b0; 
-                    end
-                    sel = 3'b0;
-                    done = 1'b1;
-                    en_inst = 1;
-                end
-                default: begin
-                    en_s = 0;
-                    en_c = 0;
-                    done = 0;
-                    sel = 3'b0;
-                    en = 8'b0;
-                    en_inst = 0;
-                    mux_sel = 4'b1001; //def_val
-                end
-            endcase
+                en_inst = 0;
+                mux_sel = 4'b1001; //def_val
+            end
+        endcase
     end
 
     // Next state combinational logic
