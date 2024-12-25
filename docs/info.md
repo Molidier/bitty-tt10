@@ -257,7 +257,7 @@ Following these steps ensures smooth operation from writing or generating instru
 ### Setup
 1. **Prerequisites**:
    - Install Python and cocotb.
-   - Ensure Verilog simulation tools (e.g., Verilator, ModelSim) are installed.
+   - Ensure Verilog simulation tools (Verilator, Iverilog) are installed.
    - Use the following command to install the dependencies:
    ```bash
       pip install -r requirements.txt
@@ -273,9 +273,8 @@ Following these steps ensures smooth operation from writing or generating instru
 ### Running the Test
 1. Execute the cocotb testbench:
    ```bash
-   make SIM=verilator
+   make
    ```
-   Replace `verilator` with your preferred simulator.
 
 2. Observe the test results in the terminal and logs:
    - Successes and failures are detailed in `uart_emulator_log.txt`.
