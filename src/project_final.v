@@ -20,7 +20,7 @@ module tt_um_bitty (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-    //I/O ports assignment
+    //top-module I/O ports assignment
 
     wire reset;
     wire rx_data_bit;
@@ -31,8 +31,7 @@ module tt_um_bitty (
     assign rx_data_bit = ui_in[0];
     assign sel_baude_rate = ui_in[2:1];
 
-
-
+    //Unused output ports assignment to zero
     assign uo_out[7:1] = 7'b0;
     assign uio_out[7:0] = 8'b0;
     assign uio_oe[7:0] = 8'b0;
@@ -42,6 +41,8 @@ module tt_um_bitty (
 
     assign uo_out[0] = tx_data_bit; //output
 
+
+    //General ports declaration
     wire [7:0] new_pc;  // Declare new_pc as a wire
 	wire [7:0] addr;
 
@@ -75,7 +76,6 @@ module tt_um_bitty (
     parameter S6 = 4'b0110;
     parameter S7 = 4'b0111;
 
-
     //Use in FSM
     reg stop_for_rw;
 
@@ -84,9 +84,7 @@ module tt_um_bitty (
         .clk(clk),
         .reset(reset),
         .address(addr),  
-
         .stop_for_rw(stop_for_rw),
-
         .rx_do(rx_done),          
         .rx_data(from_uart_to_modules),  
         .tx_done(tx_done),        
@@ -95,10 +93,11 @@ module tt_um_bitty (
         .tx_data_out(data_to_uart_from_fetch),  
         .done_out(fetch_done)
     );
+
     reg [12:0] clks_per_bit;
 	 
+    //Select baud rate of the external device
     always@(*) begin
-		//clks_per_bit = 5208;
 		case (sel_baude_rate)
 			2'b00:clks_per_bit = 5208; //9600
 			2'b01:clks_per_bit = 2604; //19200
@@ -122,6 +121,8 @@ module tt_um_bitty (
         .tx_done(tx_done),
         .recieved_data(from_uart_to_modules)
     );
+
+    //Branch Logic Instance
 	 
 	branch_logic bl_inst(
         .address(addr),
@@ -141,6 +142,7 @@ module tt_um_bitty (
 
     wire [7:0] unused_8bit;
 
+    //MUX to select tx_data port for UART
     mux2to1 mux2to1_txdata(
         .reg0({8'b0, data_to_uart_from_fetch}),
         .reg1({8'b0,from_bitty_to_uart}),
@@ -150,15 +152,15 @@ module tt_um_bitty (
 
     wire [14:0] unused_15bit;
 
+    //MUX to select tx_en port for UART
     mux2to1 mux2to1_txen(
-
         .reg0({15'b0, tx_en_fiu}),
         .reg1({15'b0, tx_en_bitty}),
         .sel(uart_sel),
         .out({unused_15bit, tx_en})
     );
 
-
+    //Bitty instance
     bitty bitty_inst(
         .clk(clk),
         .reset(reset),
@@ -210,8 +212,6 @@ module tt_um_bitty (
         endcase
     end
 
-
-
     always @(*) begin
         case(cur_state)
             S0: next_state = (fetch_done==1) ? S1:S0;
@@ -225,9 +225,5 @@ module tt_um_bitty (
             default: next_state = S0;
         endcase
     end
-
-
-
-
 
 endmodule
