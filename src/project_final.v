@@ -26,10 +26,12 @@ module tt_um_bitty (
     wire rx_data_bit;
     wire tx_data_bit;
     wire [1:0] sel_baude_rate;
+    wire bitty_sel; //to select bitty module
 
     assign reset = rst_n;
     assign rx_data_bit = ui_in[0];
     assign sel_baude_rate = ui_in[2:1];
+    assign bitty_sel = ui_in[3];
 
     //Unused output ports assignment to zero
     assign uo_out[7:1] = 7'b0;
@@ -160,6 +162,43 @@ module tt_um_bitty (
         .out({unused_15bit, tx_en})
     );
 
+    reg done_moldir;
+    reg done_sayat;
+    reg [15:0] d_out_moldir;
+    reg [15:0] d_out_sayat;
+    reg [7:0] from_bitty_to_uart_moldir;
+    reg [7:0] from_bitty_to_uart_sayat;
+    reg tx_en_bitty_moldir;
+    reg tx_en_bitty_sayat;
+
+    mux2to1 mux2to1_txen_bitty(
+        .reg0({15'b0, tx_en_bitty_moldir}),
+        .reg1({15'b0, tx_en_bitty_sayat}),
+        .sel(bitty_sel),
+        .out(tx_en_bitty)
+    );
+
+    mux2to1 mux2to1_txdata_bitty(
+        .reg0(from_bitty_to_uart_moldir),
+        .reg1(from_bitty_to_uart_sayat),
+        .sel(bitty_sel),
+        .out(from_bitty_to_uart)
+    );
+
+    mux2to1 mux2to1_dout(
+        .reg0(d_out_moldir),
+        .reg1(d_out_sayat),
+        .sel(bitty_sel),
+        .out(d_out)
+    );
+
+    mux2to1 mux2to1_done(
+        .reg0(done_moldir),
+        .reg1(done_sayat),
+        .sel(bitty_sel),
+        .out(done)
+    );
+
     //Bitty instance
     bitty bitty_inst(
         .clk(clk),
@@ -169,10 +208,24 @@ module tt_um_bitty (
         .rx_data(from_uart_to_modules),
         .rx_done(rx_done),
         .tx_done(tx_done),
-        .tx_en(tx_en_bitty),
-        .tx_data(from_bitty_to_uart),
-        .done(done),
-        .d_out(d_out)
+        .tx_en(tx_en_bitty_moldir),
+        .tx_data(from_bitty_to_uart_moldir),
+        .done(done_moldir),
+        .d_out(d_out_moldir)
+    );
+
+    bitty_sayat bitty_sayat_inst(
+        .clk(clk),
+        .reset(reset),
+        .run(run_bitty),
+        .d_instr(mem_out),
+        .rx_data(from_uart_to_modules),
+        .rx_done(rx_done),
+        .tx_done(tx_done),
+        .tx_en(tx_en_bitty_sayat),
+        .tx_data(from_bitty_to_uart_sayat),
+        .done(done_sayat),
+        .d_out(d_out_sayat)
     );
 
     always @(posedge clk) begin
