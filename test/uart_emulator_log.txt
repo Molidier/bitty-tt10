@@ -1,0 +1,591 @@
+Instruction: E9A1, Register: 0007
+PC 0001 VS em_i 0001
+OK -> RX matches (004D)
+
+Instruction: 0141, Register: 0000
+PC 0002 VS em_i 0002
+OK -> RX matches (000A)
+
+Instruction: 2141, Register: 0001
+PC 0003 VS em_i 0003
+OK -> RX matches (000A)
+
+Instruction: 4141, Register: 0002
+PC 0004 VS em_i 0004
+OK -> RX matches (000A)
+
+Instruction: 6141, Register: 0003
+PC 0005 VS em_i 0005
+OK -> RX matches (000A)
+
+Instruction: 8141, Register: 0004
+PC 0006 VS em_i 0006
+OK -> RX matches (000A)
+
+Instruction: A141, Register: 0005
+PC 0007 VS em_i 0007
+OK -> RX matches (000A)
+
+Instruction: C141, Register: 0006
+PC 0008 VS em_i 0008
+OK -> RX matches (000A)
+
+Instruction: 7CFF, Register: 0003
+PC 0009 VS em_i 0009
+OK -> RX matches (000A)
+
+Instruction: 7121, Register: 0003
+PC 000A VS em_i 000A
+OK -> RX matches (0093)
+
+Instruction: 9138, Register: 0004
+PC 000B VS em_i 000B
+OK -> RX matches (0000)
+
+Instruction: D8A7, Register: 0006
+PC 000C VS em_i 000C
+OK -> RX matches (000A)
+
+Instruction: DD13, Register: 0006
+PC 000D VS em_i 000D
+OK -> RX matches (000A)
+
+Instruction: 2A4C, Register: 0001
+PC 000E VS em_i 000E
+OK -> RX matches (000A)
+
+Instruction: 7E80, Register: 0003
+PC 000F VS em_i 000F
+OK -> RX matches (00E0)
+
+Instruction: 4F0C, Register: 0002
+PC 0010 VS em_i 0010
+OK -> RX matches (00EA)
+
+Instruction: 3D1C, Register: 0001
+PC 0011 VS em_i 0011
+OK -> RX matches (0002)
+
+Instruction: 59CB, Register: 0002
+PC 0012 VS em_i 0012
+OK -> RX matches (000A)
+
+Instruction: 2240, Register: 0001
+PC 0013 VS em_i 0013
+OK -> RX matches (000C)
+
+Instruction: 7EC3, Register: 0003
+PC 0014 VS em_i 0014
+OK -> RX matches (000A)
+
+Instruction: E858, Register: 0007
+PC 0015 VS em_i 0015
+OK -> RX matches (0000)
+
+Instruction: 1954, Register: 0000
+PC 0016 VS em_i 0016
+OK -> RX matches (2800)
+
+Instruction: EAF8, Register: 0007
+PC 0017 VS em_i 0017
+OK -> RX matches (0000)
+
+Instruction: 851B, Register: 0004
+PC 0018 VS em_i 0018
+OK -> RX matches (6028)
+
+Instruction: F6CB, Register: 0007
+PC 0019 VS em_i 0019
+OK -> RX matches (000A)
+
+Instruction: 52B0, Register: 0002
+PC 001A VS em_i 001A
+OK -> RX matches (6022)
+
+Instruction: 683C, Register: 0003
+PC 001B VS em_i 001B
+OK -> RX matches (0002)
+
+Instruction: CE6F, Register: 0006
+PC 001C VS em_i 001C
+OK -> RX matches (000A)
+
+Instruction: 3D84, Register: 0001
+PC 001D VS em_i 001D
+OK -> RX matches (0002)
+
+Instruction: 35D1, Register: 0001
+PC 001E VS em_i 001E
+OK -> RX matches (00AC)
+
+Instruction: 920F, Register: 0004
+PC 001F VS em_i 001F
+OK -> RX matches (6028)
+
+Instruction: A6D5, Register: 0005
+PC 0020 VS em_i 0020
+OK -> RX matches (0280)
+
+Instruction: E9F5, Register: 0007
+PC 0021 VS em_i 0021
+OK -> RX matches (0000)
+
+Instruction: 146C, Register: 0000
+PC 0022 VS em_i 0022
+OK -> RX matches (2A80)
+
+Instruction: B158, Register: 0005
+PC 0023 VS em_i 0023
+OK -> RX matches (0002)
+
+Instruction: 261C, Register: 0001
+PC 0024 VS em_i 0024
+OK -> RX matches (0000)
+
+Instruction: 940B, Register: 0004
+PC 0026 VS em_i 0026
+OK -> RX matches (000A)
+
+Instruction: D954, Register: 0006
+PC 0027 VS em_i 0027
+OK -> RX matches (2800)
+
+Instruction: 2B30, Register: 0001
+PC 0028 VS em_i 0028
+OK -> RX matches (6022)
+
+Instruction: DFB3, Register: 0006
+PC 0029 VS em_i 0029
+OK -> RX matches (6186)
+
+Instruction: A484, Register: 0005
+PC 002A VS em_i 002A
+OK -> RX matches (9FE0)
+
+Instruction: D570, Register: 0006
+PC 002B VS em_i 002B
+OK -> RX matches (FE66)
+
+Instruction: DE40, Register: 0006
+PC 002C VS em_i 002C
+OK -> RX matches (FE66)
+
+Instruction: 6FE8, Register: 0003
+PC 002D VS em_i 002D
+OK -> RX matches (0002)
+
+Instruction: F4A9, Register: 0007
+PC 002E VS em_i 002E
+OK -> RX matches (0000)
+
+Instruction: 7359, Register: 0003
+PC 002F VS em_i 002F
+OK -> RX matches (0000)
+
+Instruction: 7970, Register: 0003
+PC 0030 VS em_i 0030
+OK -> RX matches (FE66)
+
+Instruction: 3218, Register: 0001
+PC 0031 VS em_i 0031
+OK -> RX matches (0018)
+
+Instruction: 4430, Register: 0002
+PC 0032 VS em_i 0032
+OK -> RX matches (603A)
+
+Instruction: 1CD5, Register: 0000
+PC 0033 VS em_i 0033
+OK -> RX matches (A000)
+
+Instruction: FA9C, Register: 0007
+PC 0034 VS em_i 0034
+OK -> RX matches (0002)
+
+Instruction: EEC5, Register: 0007
+PC 0035 VS em_i 0035
+OK -> RX matches (FF8C)
+
+Instruction: FAF8, Register: 0007
+PC 0036 VS em_i 0036
+OK -> RX matches (03FE)
+
+Instruction: 9788, Register: 0004
+PC 0037 VS em_i 0037
+OK -> RX matches (0000)
+
+Instruction: EDE3, Register: 0007
+PC 0038 VS em_i 0038
+OK -> RX matches (F10C)
+
+Instruction: 2224, Register: 0001
+PC 0039 VS em_i 0039
+OK -> RX matches (6018)
+
+Instruction: D698, Register: 0006
+PC 003A VS em_i 003A
+OK -> RX matches (FE66)
+
+Instruction: FDD8, Register: 0007
+PC 003B VS em_i 003B
+OK -> RX matches (000F)
+
+Instruction: 6334, Register: 0003
+PC 003C VS em_i 003C
+OK -> RX matches (FE66)
+
+Instruction: 7F84, Register: 0003
+PC 003D VS em_i 003D
+OK -> RX matches (FE57)
+
+Instruction: 24ED, Register: 0001
+PC 003E VS em_i 003E
+OK -> RX matches (603F)
+
+Instruction: D459, Register: 0006
+PC 003F VS em_i 003F
+OK -> RX matches (3F99)
+
+Instruction: F33B, Register: 0007
+PC 0040 VS em_i 0040
+OK -> RX matches (6186)
+
+Instruction: 9B85, Register: 0004
+PC 0041 VS em_i 0041
+OK -> RX matches (FF24)
+
+Instruction: AAB9, Register: 0005
+PC 0042 VS em_i 0042
+OK -> RX matches (04FF)
+
+Instruction: DB50, Register: 0006
+PC 0043 VS em_i 0043
+OK -> RX matches (0000)
+
+Instruction: C281, Register: 0006
+PC 0044 VS em_i 0044
+OK -> RX matches (0014)
+
+Instruction: 11A4, Register: 0000
+PC 0045 VS em_i 0045
+OK -> RX matches (A0DC)
+
+Instruction: 97A3, Register: 0004
+PC 0046 VS em_i 0046
+OK -> RX matches (DB3F)
+
+Instruction: 9C44, Register: 0004
+PC 0047 VS em_i 0047
+OK -> RX matches (79B9)
+
+Instruction: 1318, Register: 0000
+PC 0048 VS em_i 0048
+OK -> RX matches (0050)
+
+Instruction: 493B, Register: 0002
+PC 0049 VS em_i 0049
+OK -> RX matches (CDB5)
+
+Instruction: 14E0, Register: 0000
+PC 004A VS em_i 004A
+OK -> RX matches (054F)
+
+Instruction: A160, Register: 0005
+PC 004B VS em_i 004B
+OK -> RX matches (0A4E)
+
+Instruction: 529C, Register: 0002
+PC 004C VS em_i 004C
+OK -> RX matches (0001)
+
+Instruction: 66E8, Register: 0003
+PC 00B5 VS em_i 00B5
+OK -> RX matches (6017)
+
+Instruction: 5515, Register: 0002
+PC 00B6 VS em_i 00B6
+OK -> RX matches (0100)
+
+Instruction: 9CD8, Register: 0004
+PC 00B7 VS em_i 00B7
+OK -> RX matches (01E6)
+
+Instruction: 47ED, Register: 0002
+PC 00B8 VS em_i 00B8
+OK -> RX matches (013F)
+
+Instruction: 52F3, Register: 0002
+PC 00B9 VS em_i 00B9
+OK -> RX matches (6BDA)
+
+Instruction: B124, Register: 0005
+PC 00BA VS em_i 00BA
+OK -> RX matches (0868)
+
+Instruction: D78C, Register: 0006
+PC 00BB VS em_i 00BB
+OK -> RX matches (087C)
+
+Instruction: 5D84, Register: 0002
+PC 00BC VS em_i 00BC
+OK -> RX matches (0A54)
+
+Instruction: A67C, Register: 0005
+PC 00BD VS em_i 00BD
+OK -> RX matches (0002)
+
+Instruction: 0168, Register: 0000
+PC 00BF VS em_i 00BF
+OK -> RX matches (054F)
+
+Instruction: C22F, Register: 0006
+PC 00C0 VS em_i 00C0
+OK -> RX matches (087C)
+
+Instruction: 4EB0, Register: 0002
+PC 00C1 VS em_i 00C1
+OK -> RX matches (6A43)
+
+Instruction: 948D, Register: 0004
+PC 00C2 VS em_i 00C2
+OK -> RX matches (01E6)
+
+Instruction: A5B4, Register: 0005
+PC 00C3 VS em_i 00C3
+OK -> RX matches (0000)
+
+Instruction: 1848, Register: 0000
+PC 00C4 VS em_i 00C4
+OK -> RX matches (004C)
+
+Instruction: 9ADD, Register: 0004
+PC 00C5 VS em_i 00C5
+OK -> RX matches (0001)
+
+Instruction: 4A07, Register: 0002
+PC 00C7 VS em_i 00C7
+OK -> RX matches (6A43)
+
+Instruction: 8694, Register: 0004
+PC 00C8 VS em_i 00C8
+OK -> RX matches (8000)
+
+Instruction: 286D, Register: 0001
+PC 00C9 VS em_i 00C9
+OK -> RX matches (607F)
+
+Instruction: 5A9B, Register: 0002
+PC 00CA VS em_i 00CA
+OK -> RX matches (F2E9)
+
+Instruction: 69F1, Register: 0003
+PC 00CB VS em_i 00CB
+OK -> RX matches (6058)
+
+Instruction: 7600, Register: 0003
+PC 00CC VS em_i 00CC
+OK -> RX matches (6058)
+
+Instruction: 62BB, Register: 0003
+PC 00CD VS em_i 00CD
+OK -> RX matches (9A36)
+
+Instruction: DDB4, Register: 0006
+PC 00CE VS em_i 00CE
+OK -> RX matches (1F00)
+
+Instruction: E258, Register: 0007
+PC 00CF VS em_i 00CF
+OK -> RX matches (0006)
+
+Instruction: 82F8, Register: 0004
+PC 00D0 VS em_i 00D0
+OK -> RX matches (0008)
+
+Instruction: 9D64, Register: 0004
+PC 00D1 VS em_i 00D1
+OK -> RX matches (0002)
+
+Instruction: 04D3, Register: 0000
+PC 00D2 VS em_i 00D2
+OK -> RX matches (51E9)
+
+Instruction: 37D7, Register: 0001
+PC 00D3 VS em_i 00D3
+OK -> RX matches (607F)
+
+Instruction: D3A4, Register: 0006
+PC 00D4 VS em_i 00D4
+OK -> RX matches (1EFE)
+
+Instruction: 35E8, Register: 0001
+PC 00D5 VS em_i 00D5
+OK -> RX matches (0000)
+
+Instruction: 220C, Register: 0001
+PC 00D6 VS em_i 00D6
+OK -> RX matches (51E9)
+
+Instruction: C028, Register: 0006
+PC 00D7 VS em_i 00D7
+OK -> RX matches (10E8)
+
+Instruction: 2EBF, Register: 0001
+PC 00D8 VS em_i 00D8
+OK -> RX matches (51E9)
+
+Instruction: DEE0, Register: 0006
+PC 00D9 VS em_i 00D9
+OK -> RX matches (10EE)
+
+Instruction: D02C, Register: 0006
+PC 00DA VS em_i 00DA
+OK -> RX matches (10EE)
+
+Instruction: C5D4, Register: 0006
+PC 00DB VS em_i 00DB
+OK -> RX matches (DC00)
+
+Instruction: AAB4, Register: 0005
+PC 00DC VS em_i 00DC
+OK -> RX matches (0000)
+
+Instruction: 6819, Register: 0003
+PC 00DD VS em_i 00DD
+OK -> RX matches (9A36)
+
+Instruction: E37F, Register: 0007
+PC 00DE VS em_i 00DE
+OK -> RX matches (0006)
+
+Instruction: 1B1F, Register: 0000
+PC 00DF VS em_i 00DF
+OK -> RX matches (51E9)
+
+Instruction: A918, Register: 0005
+PC 00E0 VS em_i 00E0
+OK -> RX matches (0000)
+
+Instruction: 6180, Register: 0003
+PC 00E1 VS em_i 00E1
+OK -> RX matches (EC1F)
+
+Instruction: 2364, Register: 0001
+PC 00E2 VS em_i 00E2
+OK -> RX matches (0000)
+
+Instruction: C121, Register: 0006
+PC 00E3 VS em_i 00E3
+OK -> RX matches (DC09)
+
+Instruction: D0A8, Register: 0006
+PC 00E4 VS em_i 00E4
+OK -> RX matches (0000)
+
+Instruction: F398, Register: 0007
+PC 00E5 VS em_i 00E5
+OK -> RX matches (0001)
+
+Instruction: CE8D, Register: 0006
+PC 00E6 VS em_i 00E6
+OK -> RX matches (0074)
+
+Instruction: 39A9, Register: 0001
+PC 00E7 VS em_i 00E7
+OK -> RX matches (0000)
+
+Instruction: C067, Register: 0006
+PC 00E8 VS em_i 00E8
+OK -> RX matches (0074)
+
+Instruction: 7E9F, Register: 0003
+PC 00E9 VS em_i 00E9
+OK -> RX matches (EC1F)
+
+Instruction: 57A4, Register: 0002
+PC 00EA VS em_i 00EA
+OK -> RX matches (F2E9)
+
+Instruction: 1D3D, Register: 0000
+PC 00EB VS em_i 00EB
+OK -> RX matches (0001)
+
+Instruction: 00CD, Register: 0000
+PC 00ED VS em_i 00ED
+OK -> RX matches (0007)
+
+Instruction: 92E0, Register: 0004
+PC 00EE VS em_i 00EE
+OK -> RX matches (0004)
+
+Instruction: E3F7, Register: 0007
+PC 00EF VS em_i 00EF
+OK -> RX matches (0001)
+
+Instruction: 4AA8, Register: 0002
+PC 00F0 VS em_i 00F0
+OK -> RX matches (F2E9)
+
+Instruction: 853D, Register: 0004
+PC 00F1 VS em_i 00F1
+OK -> RX matches (0002)
+
+Instruction: B398, Register: 0005
+PC 00F3 VS em_i 00F3
+OK -> RX matches (0000)
+
+Instruction: 5854, Register: 0002
+PC 00F4 VS em_i 00F4
+OK -> RX matches (2E90)
+
+Instruction: 0ADF, Register: 0000
+PC 00F5 VS em_i 00F5
+OK -> RX matches (0007)
+
+Instruction: 25F8, Register: 0001
+PC 00F6 VS em_i 00F6
+OK -> RX matches (0000)
+
+Instruction: 54B7, Register: 0002
+PC 00F7 VS em_i 00F7
+OK -> RX matches (2E90)
+
+Instruction: 3840, Register: 0001
+PC 00F8 VS em_i 00F8
+OK -> RX matches (0074)
+
+Instruction: 58AF, Register: 0002
+PC 00F9 VS em_i 00F9
+OK -> RX matches (2E90)
+
+Instruction: 3F8D, Register: 0001
+PC 00FA VS em_i 00FA
+OK -> RX matches (00FC)
+
+Instruction: 6EAD, Register: 0003
+PC 00FB VS em_i 00FB
+OK -> RX matches (EC7F)
+
+Instruction: 2F73, Register: 0001
+PC 00FC VS em_i 00FC
+OK -> RX matches (51E9)
+
+Instruction: 5888, Register: 0002
+PC 00FD VS em_i 00FD
+OK -> RX matches (0010)
+
+Instruction: 0D68, Register: 0000
+PC 00FE VS em_i 00FE
+OK -> RX matches (0007)
+
+Instruction: 9CB0, Register: 0004
+PC 00FF VS em_i 00FF
+OK -> RX matches (0003)
+
+Instruction: 7C2C, Register: 0003
+PC 0000 VS em_i 0100
+OK -> RX matches (EC7F)
+
+Instruction: E9A1, Register: 0007
+PC 0001 VS em_i 0101
+ERROR -> RX mismatch (DUT: 004E, Emulator: 0001)

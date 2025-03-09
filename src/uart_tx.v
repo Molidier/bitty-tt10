@@ -11,7 +11,7 @@ module uart_tx
     input [data_width - 1:0] data_bus,
     input                    clk,
     input                    rstn,
-    input [12:0]              CLKS_PER_BIT,
+    input [12:0]            CLKS_PER_BIT,
     input                    run,
     output                   done,
     output                   data_bit
@@ -24,9 +24,10 @@ module uart_tx
     reg        data_reg;
      
     // Output assignments
-    assign done         = PS == DONE;
-   
-    // FSM: PS synchronization
+    assign done = (PS == DONE);
+    assign data_bit = data_reg;
+
+        // FSM: PS synchronization
     always @(posedge clk) begin
         if (!rstn) begin
             PS <= IDLE;
@@ -35,114 +36,107 @@ module uart_tx
             PS <= NS;
         end
     end
-
-    // FSM: Data and control logic
-    always @(negedge clk) begin
-        // Default values
-        data_reg<=1'b1;
-        clk_counter<=clk_counter;
-        bit_counter<=bit_counter;
-
-        case (PS)
-            IDLE: begin
-                data_reg <=1'b1;
-                bit_counter <=0;
-                clk_counter <=0;
-                
-                if (!run) begin
-                    //$display("tx_idle");
+   
+    // FSM: PS synchronization
+    always @(posedge clk) begin
+        if (!rstn) begin
+            clk_counter <= 13'b0;
+            bit_counter <= 3'b0;
+            data_reg <= 1'b1;
+        end
+        else begin
+            // Data and control logic
+            case (PS)
+                IDLE: begin
+                    data_reg <= 1'b1;
+                    bit_counter <= 3'b0;
+                    clk_counter <= 13'b0;
                 end
-            end
 
-            START_BIT: begin
-                data_reg <=1'b0;
-                
-                if (clk_counter < CLKS_PER_BIT - 1) begin
-                    clk_counter <=clk_counter + 1'b1;
-                end
-                else begin
-                    clk_counter <=0;
-                end
-            end
-
-            DATA_BITS: begin
-                data_reg <=data_bus[bit_counter];
-                
-                if (clk_counter < CLKS_PER_BIT - 1) begin
-                    clk_counter <=clk_counter + 1'b1;
-                end
-                else begin
-                    clk_counter <=0;
-                    
-                    if (bit_counter < 7) begin
-                        bit_counter <=bit_counter + 1'b1;
+                START_BIT: begin
+                    data_reg <= 1'b0;
+                    if (clk_counter < CLKS_PER_BIT - 1) begin
+                        clk_counter <= clk_counter + 1'b1;
+                    end
+                    else begin
+                        clk_counter <= 13'b0;
                     end
                 end
-            end
 
-            STOP_BIT: begin
-                data_reg <=1'b1;
-                
-                if (clk_counter < CLKS_PER_BIT - 1) begin
-                    clk_counter <=clk_counter + 1'b1;
+                DATA_BITS: begin
+                    data_reg <= data_bus[bit_counter];
+                    if (clk_counter < CLKS_PER_BIT - 1) begin
+                        clk_counter <= clk_counter + 1'b1;
+                    end
+                    else begin
+                        clk_counter <= 13'b0;
+                        if (bit_counter < 7) begin
+                            bit_counter <= bit_counter + 1'b1;
+                        end
+                    end
                 end
-                else begin
-                    clk_counter <=0;
+
+                STOP_BIT: begin
+                    data_reg <= 1'b1;
+                    if (clk_counter < CLKS_PER_BIT - 1) begin
+                        clk_counter <= clk_counter + 1'b1;
+                    end
+                    else begin
+                        clk_counter <= 13'b0;
+                    end
                 end
-            end
 
-            DONE: begin
-                // Reset to initial state
-            end
+                DONE: begin
+                    // Maintain idle state
+                    data_reg <= 1'b1;
+                    clk_counter <= 13'b0;
+                    bit_counter <= 3'b0;
+                end
 
-            default: begin
-                data_reg <=1'b1;
-                clk_counter <=0;
-                bit_counter <=0;
-            end
-        endcase
+                default: begin
+                    data_reg <= 1'b1;
+                    clk_counter <= 13'b0;
+                    bit_counter <= 3'b0;
+                end
+            endcase
+        end
     end
 
-    
     // Next state transition logic
-    always @(negedge clk) begin
-        // Default next state
-        NS <=PS;
+    always @(*) begin
+        // Default next state is current state
+        NS = PS;
 
         case (PS)
             IDLE: begin
-                NS <=(!run) ? START_BIT : IDLE;
+                if (!run) NS = START_BIT;
             end
 
             START_BIT: begin
-                NS <=(clk_counter == CLKS_PER_BIT - 1) ? DATA_BITS : START_BIT;
+                if (clk_counter == CLKS_PER_BIT - 1) 
+                    NS = DATA_BITS;
             end
 
             DATA_BITS: begin
                 if (clk_counter == CLKS_PER_BIT - 1) begin
-                    if (bit_counter < 7) begin
-                        NS <=DATA_BITS;
-                    end else begin
-                        NS <=STOP_BIT;
-                    end
+                    if (bit_counter == 7)
+                        NS = STOP_BIT;
                 end
             end
 
             STOP_BIT: begin
-                NS<=(clk_counter == CLKS_PER_BIT - 1) ? DONE : STOP_BIT;
+                if (clk_counter == CLKS_PER_BIT - 1)
+                    NS = DONE;
             end
 
             DONE: begin
-                NS<=IDLE;
+                NS = IDLE;
             end
 
             default: begin
-                NS<=IDLE;
+                NS = IDLE;
             end
         endcase
     end
 
-
-    // Output assignment
-    assign data_bit = data_reg;
 endmodule

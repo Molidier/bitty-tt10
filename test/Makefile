@@ -26,6 +26,7 @@ ifneq ($(GATES),yes)
 # RTL simulation:
 SIM_BUILD				= sim_build/rtl
 VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+COMPILE_ARGS    += -DGENERATE_WAVEFORM
 
 else
 
@@ -36,6 +37,7 @@ COMPILE_ARGS    += -DFUNCTIONAL
 COMPILE_ARGS    += -DUSE_POWER_PINS
 COMPILE_ARGS    += -DSIM
 COMPILE_ARGS    += -DUNIT_DELAY=\#1
+COMPILE_ARGS    += -DGENERATE_WAVEFORM
 VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/primitives.v
 VERILOG_SOURCES += $(PDK_ROOT)/sky130A/libs.ref/sky130_fd_sc_hd/verilog/sky130_fd_sc_hd.v
 
@@ -53,6 +55,12 @@ TOPLEVEL = tb
 
 # MODULE is the basename of the Python test file
 MODULE = new_tb
+
+# Add VCD waveform generation for Icarus Verilog
+ifeq ($(SIM),icarus)
+COMPILE_ARGS += -DICARUS_VCD
+export COCOTB_SIM=1
+endif
 
 # include cocotb's make rules to take care of the simulator setup
 include $(shell cocotb-config --makefiles)/Makefile.sim
