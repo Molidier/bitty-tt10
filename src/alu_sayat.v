@@ -29,5 +29,5 @@ module alu_sayat (
             default: result = 16'b0; // Default case for invalid select
         endcase
     end
-    assign alu_out = 7;
+    assign alu_out = result;
 endmodule
