@@ -83,7 +83,7 @@ module bitty_sayat (
     loader reg_inst(clk, en_inst, d_instr, reset, instruction);
     loader reg_s_load(clk, en_s, out_mux, reset, reg_s);
     loader reg_c_load(clk, en_c, mux2_out, reset, reg_c);
-    lsu_sayat lsu_inst(
+    lsu lsu_inst(
         .clk(clk),
         .reset(reset),
 
