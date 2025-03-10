@@ -18,7 +18,7 @@ module tt_um_bitty (
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
-);
+	 );
 
     //top-module I/O ports assignment
 
@@ -55,7 +55,7 @@ module tt_um_bitty (
     reg en_pc;
 
     reg run_bitty;
-    reg [15:0] mem_out;    
+    wire [15:0] mem_out;    
     
     wire [7:0] from_uart_to_modules;
     wire [7:0] data_to_uart_from_fetch;
@@ -225,5 +225,6 @@ module tt_um_bitty (
             default: next_state = S0;
         endcase
     end
+	 
 
 endmodule
