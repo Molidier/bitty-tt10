@@ -32,6 +32,11 @@ project:
     - "uart_tx.v"
     - "uart_rx.v"
     - "bitty_sayat.v"
+    - "alu_sayat.v"
+    - "lsu_sayat.v"
+    - "mux_sayat.v"
+    - "loader.v"
+    - "control_unit.v"
 
 
 
