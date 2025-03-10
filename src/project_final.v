@@ -32,7 +32,7 @@ module tt_um_bitty (
     assign reset = rst_n;
     assign rx_data_bit = ui_in[0];
     assign sel_baude_rate = ui_in[2:1];
-    assign bitty_sel = ui_in[3];
+    assign bitty_sel = 0;
 
     //Unused output ports assignment to zero
     assign uo_out[7:1] = 7'b0;

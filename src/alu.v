@@ -42,6 +42,6 @@ module alu(
         endcase
     end
 
-    assign alu_out = res;
+    assign alu_out = 5;
 
 endmodule

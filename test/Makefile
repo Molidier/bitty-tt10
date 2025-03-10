@@ -8,13 +8,18 @@ SRC_DIR = $(PWD)/../src
 PROJECT_SOURCES = \
   project_final.v \
   alu.v \
+  alu_sayat.v \
   bitty.v \
+  bitty_sayat.v \
   branch_logic.v \
   cpu.v \
+  control_unit.v \
   dff_lol.v \
+  loader.v \
   fetch_instruction.v \
   lsu.v \
   mux.v \
+  mux_sayat.v \
   mux2to1.v \
   pc.v \
   uart_module.v \
