@@ -6,9 +6,6 @@
 `default_nettype none
 
 module tt_um_bitty (
-    output wire [6:0] HEX0,     // HEX0
-    output wire [6:0] HEX1,     // HEX1  
-    output wire [6:0] HEX2,     // HEX2
     /* verilator lint_off UNUSEDSIGNAL */
     input  wire [7:0] ui_in,    // Dedicated inputs
     /* verilator lint_off UNDRIVEN */
@@ -21,27 +18,6 @@ module tt_um_bitty (
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
-);
-
-    wire reg0, reg1, reg2, reg3, reg4, reg5, reg6, reg7, im_d, def_val;
-    wire [3:0] mux_sel;
-    wire [15:0] mux_out;
-
-	mux M0(
-
-    reg0,
-    reg1,
-    reg2,
-    reg3,
-    reg4,
-    reg5,
-    reg6,
-    reg7,
-    im_d,
-    def_val,
-
-    mux_sel,
-    mux_out
 );
 
 
@@ -57,7 +33,6 @@ module tt_um_bitty (
     assign rx_data_bit = ui_in[0];
     assign sel_baude_rate = ui_in[2:1];
     assign bitty_sel = ui_in[3];
-    assign mux_sel = ui_in[7:4];
 
     //Unused output ports assignment to zero
     assign uo_out[7:1] = 7'b0;
@@ -65,7 +40,7 @@ module tt_um_bitty (
     assign uio_oe[7:0] = 8'b0;
 
     /* verilator lint_off UNUSED */
-    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, uio_in};
+    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, uio_in, ui_in[7:4]};
 
     assign uo_out[0] = tx_data_bit; //output
 
@@ -310,12 +285,5 @@ module tt_um_bitty (
         endcase
     end
 
-    decoder_hex D0
-    (
-        d_out,
-        HEX0,
-        HEX1,
-        HEX2
-    );
 
 endmodule
