@@ -69,6 +69,7 @@ module uart_rx
                     else begin
                         clk_counter <= 0;
                         data_bus_wire[bit_counter] <= data_bit;
+                        /* verilator lint_off WIDTHEXPAND */
                         if (bit_counter < data_width - 1) begin
                             bit_counter <= bit_counter + 1;
                         end
@@ -123,6 +124,7 @@ module uart_rx
             
             DATA_BITS: begin
                 if (clk_counter == CLKS_PER_BIT - 1) begin
+                /* verilator lint_off WIDTHEXPAND */
                     NS = (bit_counter < data_width - 1) ? DATA_BITS : STOP_BIT;
                 end
             end
