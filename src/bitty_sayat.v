@@ -14,7 +14,7 @@ module bitty_sayat (
     output done
 );
     genvar k;
-    wire [15:0] instruction, reg_i, reg_c; //wires for data
+    wire [15:0] instruction, reg_c; //wires for data
     wire [15:0] reg_s, data_to_ld, out_mux, mux2_out;
     wire [15:0] out [7:0];
     // enable values
