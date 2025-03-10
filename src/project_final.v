@@ -6,6 +6,9 @@
 `default_nettype none
 
 module tt_um_bitty (
+    output wire [6:0] HEX0,     // HEX0
+    output wire [6:0] HEX1,     // HEX1  
+    output wire [6:0] HEX2,     // HEX2
     /* verilator lint_off UNUSEDSIGNAL */
     input  wire [7:0] ui_in,    // Dedicated inputs
     /* verilator lint_off UNDRIVEN */
@@ -20,6 +23,28 @@ module tt_um_bitty (
     input  wire       rst_n     // reset_n - low to reset
 );
 
+    wire reg0, reg1, reg2, reg3, reg4, reg5, reg6, reg7, im_d, def_val;
+    wire [3:0] mux_sel;
+    wire [15:0] mux_out;
+
+	mux M0(
+
+    reg0,
+    reg1,
+    reg2,
+    reg3,
+    reg4,
+    reg5,
+    reg6,
+    reg7,
+    im_d,
+    def_val,
+
+    mux_sel,
+    mux_out
+);
+
+
     //top-module I/O ports assignment
 
     wire reset;
@@ -32,6 +57,7 @@ module tt_um_bitty (
     assign rx_data_bit = ui_in[0];
     assign sel_baude_rate = ui_in[2:1];
     assign bitty_sel = ui_in[3];
+    assign mux_sel = ui_in[7:4];
 
     //Unused output ports assignment to zero
     assign uo_out[7:1] = 7'b0;
@@ -39,7 +65,7 @@ module tt_um_bitty (
     assign uio_oe[7:0] = 8'b0;
 
     /* verilator lint_off UNUSED */
-    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, uio_in, ui_in[7:3]};
+    wire _unused = &{ena, uio_out, uo_out[7:1], 1'b0, uio_oe, uio_in};
 
     assign uo_out[0] = tx_data_bit; //output
 
@@ -171,18 +197,23 @@ module tt_um_bitty (
     reg tx_en_bitty_moldir;
     reg tx_en_bitty_sayat;
 
+    wire [14:0] unused_15bit_tx;
+    wire [7:0] unused_8bit_tx;
+    wire [14:0] unused_15bit_done;
+
+
     mux2to1 mux2to1_txen_bitty(
         .reg0({15'b0, tx_en_bitty_moldir}),
         .reg1({15'b0, tx_en_bitty_sayat}),
         .sel(bitty_sel),
-        .out(tx_en_bitty)
+        .out({unused_15bit_tx, tx_en_bitty})
     );
 
     mux2to1 mux2to1_txdata_bitty(
-        .reg0(from_bitty_to_uart_moldir),
-        .reg1(from_bitty_to_uart_sayat),
+        .reg0({8'b0, from_bitty_to_uart_moldir}),
+        .reg1({8'b0,from_bitty_to_uart_sayat}),
         .sel(bitty_sel),
-        .out(from_bitty_to_uart)
+        .out({unused_8bit_tx, from_bitty_to_uart})
     );
 
     mux2to1 mux2to1_dout(
@@ -193,10 +224,10 @@ module tt_um_bitty (
     );
 
     mux2to1 mux2to1_done(
-        .reg0(done_moldir),
-        .reg1(done_sayat),
+        .reg0({15'b0, done_moldir}),
+        .reg1({15'b0, done_sayat}),
         .sel(bitty_sel),
-        .out(done)
+        .out({unused_15bit_done, done})
     );
 
     //Bitty instance
@@ -278,5 +309,13 @@ module tt_um_bitty (
             default: next_state = S0;
         endcase
     end
+
+    decoder_hex D0
+    (
+        d_out,
+        HEX0,
+        HEX1,
+        HEX2
+    );
 
 endmodule
